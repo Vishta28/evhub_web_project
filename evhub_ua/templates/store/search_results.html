@@ -1,0 +1,31 @@
+<div class="search-results">
+    <ul class="list-group">
+        {% if results %}
+            {% for item in results %}
+            <a href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
+                <li class="list-group-item list-group-item-action shadow rounded">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <div class="image container">
+                                <img src="{{ item.image.url }}" style="max-width: 50px; max-height: 50px;">
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex align-items-center justify-content-center">
+                            <div class="title container">
+                                {{ item.title }} - <b>{{ item.price }}грн</b>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </a>
+            {% endfor %}
+        {% else %}
+            <li class="list-group-item list-group-item-action shadow rounded">
+                <div class="col-10 d-flex align-items-center justify-content-center">
+                    <div class="title container">
+                        Нажаль по вашому запиту нічого не знайдено
+                    </div>
+                </div>
+        {% endif %}
+    </ul>
+</div>

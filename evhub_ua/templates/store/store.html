@@ -1,0 +1,161 @@
+{% extends 'store/main.html' %}
+
+
+{% block title %}
+Всі товари
+{% endblock %}
+
+{% block content %}
+<div class=".container-md m-1 p-3 border border-light">
+    <div class="row">
+        <!--  filter items  -->
+        <div class="col-3">
+            <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 w-220px list-group" data-bs-theme="light">
+                <li><a class="dropdown-item rounded-2" href="?q=price_up">Від дешевих</a></li>
+                <li><a class="dropdown-item rounded-2" href="?q=price_down">Від дорогих</a></li>
+                <li><a class="dropdown-item rounded-2" href="?q=date_new">Від нових товарів</a></li>
+                <li><a class="dropdown-item rounded-2" href="?q=date_old">Від старих товарів</a></li>
+            </ul>
+            <br>
+            <form action="{% url 'store' %}" method="get">
+                <ul class="list-group">
+                  {% for parameters in view.get_parameters.types %}
+                  <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox" name="type">
+                    <label class="form-check-label" for="firstCheckbox">{{parameters}}</label>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <br>
+                <ul class="list-group">
+                  {% for parameters in view.get_parameters.powers_amps %}
+                  <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox2" name="power_amps">
+                    <label class="form-check-label" for="firstCheckbox">{{parameters}} Ампер</label>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <br>
+                <ul class="list-group">
+                  {% for parameters in view.get_parameters.phases %}
+                  <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox3" name="phases">
+                    <label class="form-check-label" for="firstCheckbox">{{parameters}}</label>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <br>
+                <ul class="list-group">
+                  {% for parameters in view.get_parameters.brands %}
+                  <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox4" name="brand">
+                    <label class="form-check-label" for="firstCheckbox">{{parameters}}</label>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <br>
+                <button type="submit" class="btn btn-warning opacity-75">Пошук</button>
+            </form>
+        </div>
+        <!--  all items list  -->
+        <div class="col-lg-9">
+            <div class="row">
+                {% for item in items %}
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="d-block mx-auto card" style="width: 17rem;">
+                    <!--  top card  -->
+                    {% if item.image %}
+                        <a href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
+                            <img src="{{ item.image.url }}" class="bd-placeholder-img card-img-top" width="100%" height="290">
+                        </a>
+                    {% else %}
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+                    {% endif %}
+                      <div class="card-body">
+                        <p class="card-title">{{item.title}}</p>
+                      </div>
+                      <!--  middle card  -->
+                      <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="container text-dark">
+                                        {{item.price}} грн
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <a href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <!--  down card  -->
+                        <li class="list-group-item">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="button" class="btn btn-warning opacity-75 rounded-0">
+                                            Купити/Додати у кошик
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <br>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  pagination menu  -->
+
+<nav aria-label="Page navigation example" class="pagination justify-content-center">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; first</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&laquo; first</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">previous</span>
+            </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+            <span class="page-link">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+        </li>
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">next</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">last &raquo;</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}

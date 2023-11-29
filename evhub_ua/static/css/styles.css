@@ -1,0 +1,69 @@
+.col-lg-2 col-md-3 col-sm-6 col-5 {
+    position: relative;
+    overflow: visible;
+}
+
+#search-results-item {
+    position: relative;
+    overflow: visible;
+}
+
+.search-results {
+    position: absolute;
+    z-index: 999;
+}
+
+.card:hover {
+        border: 1px solid orange;
+    }
+    #welcome-card1:hover, #welcome-card2:hover, #welcome-card3:hover, #welcome-card4:hover:hover {
+        border: none;
+    }
+    a {
+    text-decoration: none;
+    }
+    .form-control:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+    }
+    .custom-card {
+        max-width: 14rem;
+    }
+    .accordion-button:focus {
+        border-color: #181a18;
+        box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+    }
+    .offcanvas{
+     width:60% !important;
+    }
+   @media (min-width: 992px) {
+    .offcanvas {
+    width: 30% !important; /* Змініть ширину на вашу потребу */
+  }
+}
+#quick_view {
+    position: absolute;
+    z-index: 1000;
+    /* Додайте інші стилі за потребою */
+}
+.pagination .page-link:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+}
+
+.list-group .list-group-item .form-check-input:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+}
+.list-group .list-group-item .form-check-input:checked {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+}
+.form-check-input:checked {
+  background-color: #e8ab33; /* Змініть колір фону на ваш вибір */
+  border-color: #e8ab33; /* Змініть колір рамки на ваш вибір */
+}
+.btn-close:focus {
+    border-color: #181a18;
+    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+}

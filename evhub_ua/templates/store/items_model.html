@@ -1,0 +1,33 @@
+{% extends 'store/main.html' %}
+
+{% block title %}
+Доступні моделі
+{% endblock %}
+
+{% block content %}
+<div class="row g-0 p-1">
+  {% block models %}
+    {% for models in category_model %}
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <a href="{% url 'items_list' category=models.category.slug model=models.slug %}">
+          <!--  model card  -->
+          <div class="card p-3">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <img src="{{ models.image.url }}" class="card-img img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-6">
+                <div class="card-body text-dark">
+                  <h5 class="card-title">{{ models.title }}</h5>
+                  <p class="card-text">{{ models.description }}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div>
+    {% endfor %}
+  {% endblock %}
+</div>
+{% endblock %}

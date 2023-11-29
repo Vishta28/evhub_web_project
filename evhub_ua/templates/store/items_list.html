@@ -1,0 +1,81 @@
+{% extends 'store/main.html' %}
+
+
+{% block title %}
+Головна сторінка
+{% endblock %}
+
+{% block content %}
+<div class="container-lg mt-3 position-relative">
+    <div class="row position-relative">
+        {% for item in items %}
+        <div id="modals-here"
+            class="modal modal-blur fade"
+            style="display: none"
+            aria-hidden="false"
+            tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 position-relative">
+            <div class="d-block mx-auto card position-relative" style="width: 18rem;">
+                <div id="quick_view_{{item.slug}}" class="position-absolute"></div>
+            {% if item.image %}
+                <a href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
+                    <img src="{{ item.image.url }}" class="bd-placeholder-img card-img-top" width="100%" height="290">
+                </a>
+            {% else %}
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+            {% endif %}
+                <div class="position-absolute top-0 end-0 p-2">
+                    <button type="submit" class="btn"
+                        hx-get="{% url 'quick_view' category=item.category.slug model=item.model.slug charger_slug=item.slug %}"
+                        hx-target="#modals-here"
+                        hx-trigger="click"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modals-here">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-fullscreen opacity-50" viewBox="0 0 16 16">
+                          <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                    </button>
+                </div>
+                {% if item.in_stock == 'True' %}
+                <div class="bottom-0 start-0 p-2">
+                    <span class="badge text-bg-success opacity-75">В наявності</span>
+                </div>
+                {% elif item.in_stock == 'False' %}
+                <div class="bottom-0 start-0 p-2">
+                    <span class="badge text-bg-danger opacity-75">Немає в наявності</span>
+                </div>
+                {% elif item.in_stock == 'pending' %}
+                <div class="bottom-0 start-0 p-2">
+                    <span class="badge text-bg-warning opacity-75">Під замовлення</span>
+                </div>
+                {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{item.title}}</h5>
+              </div>
+              <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="container text-dark text-md-center">
+                                <u>{{item.price}} грн</u>
+                            </div>
+                        </div>
+                        <div class="col-5 text-md-right">
+                            <button type="button" class="btn btn-md btn-warning opacity-75 rounded-0 shadow">
+                                Купити
+                            </button>
+                        </div>
+                    </div>
+                </li>
+              </ul>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
