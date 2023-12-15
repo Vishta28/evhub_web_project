@@ -57,7 +57,7 @@ class ItemDetail(DetailView):
 class StorePageView(ListView, StoreFilter):
 	model = ChargersItems
 	context_object_name = 'items'
-	paginate_by = 2
+	paginate_by = 4
 
 	# підвантажуємо сторінку в залежності від типу притсрою
 

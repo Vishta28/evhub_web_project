@@ -27,7 +27,7 @@
                   <div class="offcanvas-body">
                       <div>
                       <form action="{% url 'store' %}" method="get">
-                        <ul class="list-group">
+                        <ul class="list-group rounded-0">
                         {% for parameters in view.get_parameters.categories %}
                           <li class="list-group-item">
                             <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox" name="categories">
@@ -42,7 +42,7 @@
                         {% endfor %}
                         </ul>
                         <br>
-                        <ul class="list-group">
+                        <ul class="list-group rounded-0">
                         {% for parameters in view.get_parameters.types %}
                           <li class="list-group-item">
                             <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox1" name="type">
@@ -51,7 +51,7 @@
                         {% endfor %}
                         </ul>
                         <br>
-                        <ul class="list-group">
+                        <ul class="list-group rounded-0">
                         {% for parameters in view.get_parameters.powers_amps %}
                           <li class="list-group-item">
                             <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox2" name="power_amps">
@@ -60,7 +60,7 @@
                         {% endfor %}
                         </ul>
                         <br>
-                        <ul class="list-group">
+                        <ul class="list-group rounded-0">
                         {% for parameters in view.get_parameters.phases %}
                           <li class="list-group-item">
                             <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox3" name="phases">
@@ -69,7 +69,7 @@
                         {% endfor %}
                         </ul>
                         <br>
-                        <ul class="list-group">
+                        <ul class="list-group rounded-0">
                         {% for parameters in view.get_parameters.brands %}
                           <li class="list-group-item">
                             <input class="form-check-input me-1" type="checkbox" value="{{ parameters }}" id="firstCheckbox4" name="brand">
@@ -112,9 +112,18 @@
 
 <div class="container-md mt-3">
     <div class="row g-0">
+        <div id="modals-here"
+            class="modal modal-blur fade"
+            style="display: none"
+            aria-hidden="false"
+            tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content"></div>
+            </div>
+        </div>
         {% for item in items %}
             <div class="col-6 col-lg-4">
-                <div class="custom-card border-white">
+                <div class="card custom-card border-0">
                 <!--  top card  -->
                 {% if item.image %}
                     <a class="card-image" href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
@@ -124,41 +133,32 @@
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
                 {% endif %}
                   <div class="card-body">
-                    <p class="card-title text-center">{{item.title}}</p>
+                    <h6 class="text-muted small">{{item.category}}</h6>
+                    <h7 class="card-title text-center">{{item.title}}</h7>
                   </div>
-                    <br>
                   <div class="container text-center text-dark">
-                      <b>{{item.price}} грн</b>
+                      <h6>{{item.price}} грн</h6>
                   </div>
                     <!--  down card  -->
                     <ul class="list-group">
                       <li class="list-group-item rounded-0 border-start-0 border-end-0">
-                          <div class="container">
-                              <div class="row">
-                                  <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-warning opacity-75 rounded-0">
-                                        Купити
-                                    </button>
-                                  </div>
-                                  <div class="col-6">
-                                    <div class="dropup-start dropup">
-                                      <button type="button" class="btn btn-sm border-warning opacity-75 offset-5 rounded-0" data-bs-toggle="dropdown">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                                          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                                        </svg>
-                                      </button>
-                                      <ul class="dropdown-menu dropdown-menu-end border-warning">
-                                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
-                                          <span class="d-inline-block bg-success rounded-circle p-1"></span>
-                                          Переглянути
-                                        </a></li>
-                                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
-                                          <span class="d-inline-block bg-success rounded-circle p-1"></span>
-                                          Порівняти
-                                        </a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
+                          <div class="row align-items-center">
+                              <div class="col-6">
+                                <button type="button" class="btn btn-md btn-warning opacity-75 rounded-0">
+                                    Купити
+                                </button>
+                              </div>
+                              <div class="col-4 offset-1">
+                                <button type="submit" class="btn"
+                                    hx-get="{% url 'quick_view' category=item.category.slug model=item.model.slug charger_slug=item.slug %}"
+                                    hx-target="#modals-here"
+                                    hx-trigger="click"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modals-here">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-fullscreen opacity-50" viewBox="0 0 16 16">
+                                      <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+                                    </svg>
+                                </button>
                               </div>
                           </div>
                       </li>
@@ -177,13 +177,13 @@
             <ul class="pagination">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link link-warning rounded-0 border-top-0 border-bottom-0" href="?{{ queries }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <a class="page-link link-warning rounded-0" href="?{{ queries }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
-                        <span class="page-link rounded-0 border-top-0 border-bottom-0" aria-hidden="true">&laquo;</span>
+                        <span class="page-link border-0" aria-hidden="true">&laquo;</span>
                     </li>
                 {% endif %}
 
@@ -201,13 +201,13 @@
 
                 {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link link-warning rounded-0 border-top-0 border-bottom-0" href="?{{ queries }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <a class="page-link link-warning rounded-0" href="?{{ queries }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
-                        <span class="page-link  rounded-0 border-top-0 border-bottom-0" aria-hidden="true">&raquo;</span>
+                        <span class="page-link border-0" aria-hidden="true">&raquo;</span>
                     </li>
                 {% endif %}
             </ul>

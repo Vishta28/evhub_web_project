@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 position-relative">
-            <div class="d-block mx-auto card position-relative" style="width: 18rem;">
+            <div class="d-block mx-auto card position-relative rounded-0" style="width: 18rem;">
                 <div id="quick_view_{{item.slug}}" class="position-absolute"></div>
             {% if item.image %}
                 <a href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
@@ -54,14 +54,15 @@
                 </div>
                 {% endif %}
               <div class="card-body">
-                <h5 class="card-title">{{item.title}}</h5>
+                  <h6 class="text-muted small">{{item.category}}</h6>
+                  <h6 class="card-title display-6">{{item.title}}</h6>
               </div>
-              <ul class="list-group">
+              <ul class="list-group rounded-0">
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-7">
                             <div class="container text-dark text-md-center">
-                                <u>{{item.price}} грн</u>
+                                <h6>{{item.price}} грн</h6>
                             </div>
                         </div>
                         <div class="col-5 text-md-right">

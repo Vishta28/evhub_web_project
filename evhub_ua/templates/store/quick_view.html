@@ -14,9 +14,18 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-6">
-                    {% if chargers_detail.image %}
-                    <img src="{{ chargers_detail.image.url }}" class="bd-placeholder-img card-img-top" alt="...">
-                    {% endif %}
+                    <div class="card example-1 border-0 overflow-scroll" style="max-height: 300px;">
+                        <div class="card-body">
+                            {% if chargers_detail.image %}
+                            <img src="{{ chargers_detail.image.url }}" class="bd-placeholder-img card-img-top" alt="...">
+                            {% endif %}
+                            {% if chargers_detail.attachments.all %}
+                            {% for attachment in chargers_detail.attachments.all %}
+                            <img src="{{ attachment.images.url }}" class="bd-placeholder-img card-img-top" alt="...">
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
                 <div class="col-6">
                   <ul class="list-group list-group-flush text-center small">

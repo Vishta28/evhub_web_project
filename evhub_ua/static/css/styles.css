@@ -26,7 +26,7 @@
         border-color: #ffffff;
         box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
     }
-    .custom-card {
+    .card custom-card {
         max-width: 14rem;
     }
     .accordion-button:focus {

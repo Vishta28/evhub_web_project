@@ -1,5 +1,7 @@
 from django.db import models
 from autoslug import AutoSlugField
+from django.utils.text import slugify
+import os
 
 class Category(models.Model):
 	title = models.CharField(max_length=55)
@@ -53,22 +55,42 @@ class ChargersItems(models.Model):
 	country = models.CharField('Країна-виробник', max_length=20)
 	form = models.CharField('Формфактор', max_length=15, null=True, blank=True)
 	features = models.TextField('Додаткові функції', max_length=200, null=True, blank=True)
-	image = models.ImageField('Зображення', null=True, blank=True, upload_to='images/')
 	time = models.DateTimeField('Дата створення', auto_now_add=True, null=True)
 	model = models.ForeignKey(ChargerItemModel, null=True, blank=True, on_delete=models.CASCADE)
 	category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
 	in_stock = models.CharField('Наявність', null=True, blank=True, choices=IN_STOCK_CHOICES)
+	image = models.ImageField('Головне зображення', null=True, blank=True, upload_to='images/')
+
+	class Meta:
+		verbose_name_plural = 'Зарядні пристрої'
 
 	def __str__(self):
 		return self.title
 
+# функція для генерації імені для зображень товару
+def generate_filename(instance, filename):
+    base_filename, file_extension = os.path.splitext(filename)
+    new_filename = f"{slugify(base_filename)}_{instance.pk}{file_extension}"
+    return os.path.join('images/', new_filename)
+
 class Attachment(models.Model):
-	images = models.ImageField('Галерея фото', upload_to='images/')
-	item = models.ManyToManyField(ChargersItems, verbose_name='Зарядні пристрої')
+	title = models.CharField("Ім\'я файлу", max_length=200, blank=True)
+	images = models.ImageField('Галерея фото', upload_to=generate_filename)
+	chargersitems = models.ForeignKey(ChargersItems, null=True, blank=True, on_delete=models.CASCADE, related_name='attachments')
+	def __str__(self):
+		return self.images.url
+
+	def save(self, *args, **kwargs):
+		# Вказуємо автоматичне стоврення імені файлу якщо title порожній
+		if not self.title:
+			self.title = os.path.basename(self.images.name)
+
+		super().save(*args, **kwargs)
 
 	class Meta:
 		verbose_name = 'Галерея фото'
 		verbose_name_plural = 'Галерея фото'
+
 
 # class MultipleImages(models.Model):
 #     name = models.CharField(max_length=255)

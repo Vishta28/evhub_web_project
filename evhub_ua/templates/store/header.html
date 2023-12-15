@@ -14,7 +14,7 @@
                     {% csrf_token %}
                     <form class="search" method="GET" action="{% url 'store' %}">
                         <div class="input-group mb-3 shadow mt-2">
-                            <input type="text" class="form-control mx-auto" type="search" placeholder="Введіть назву товару" aria-label="Recipient's username" aria-describedby="basic-addon2" name="q" hx-get="{% url 'search_results' %}" hx-trigger="keyup changed, search, delay:2000ms" hx-swap="innerHTML transition:true" hx-target="#search-results-item" hx-vals-conditional="this.value.length >= 3">
+                            <input type="text" class="form-control mx-auto" type="search" placeholder="Введіть назву товару" aria-label="Recipient's username" aria-describedby="basic-addon2" name="q" hx-get="{% url 'search_results' %}" hx-trigger="keyup changed, search, delay:2000ms" hx-swap="innerHTML transition:true" hx-target="#search-results-item" hx-vals-conditional="this.value.length >= 3" autocomplete="off">
                             <div class="border m3 m3 border-end border-light">
                                 <button type="submit" class="btn btn-warning">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="dark" class="bi bi-search" viewBox="0 0 16 16">
