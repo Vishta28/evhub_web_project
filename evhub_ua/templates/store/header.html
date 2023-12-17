@@ -1,70 +1,52 @@
 <!--  header container  -->
 <header>
-    <div class=".container-md header">
-        <div class="m-1 p-3 border border-light bg-warning">
+    <div class=".container header">
+        <div class="p-3 bg-warning bg-opacity-75">
             <!-- logo -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="row g-0 header">
+                <div class="col-5 text-center d-flex align-items-center">
                     <a href="/">
-                    {% load static %} <img class="d-block mx-auto mb-2" src="{% static 'store/cropped-eMobility-supermarket2.png' %}" width="180" height="57">
+                    {% load static %} <img src="{% static 'store/cropped-eMobility-supermarket2.png' %}" width="135" height="45">
                     </a>
                 </div>
-                <!-- search bar -->
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    {% csrf_token %}
-                    <form class="search" method="GET" action="{% url 'store' %}">
-                        <div class="input-group mb-3 shadow mt-2">
-                            <input type="text" class="form-control mx-auto" type="search" placeholder="Введіть назву товару" aria-label="Recipient's username" aria-describedby="basic-addon2" name="q" hx-get="{% url 'search_results' %}" hx-trigger="keyup changed, search, delay:2000ms" hx-swap="innerHTML transition:true" hx-target="#search-results-item" hx-vals-conditional="this.value.length >= 3" autocomplete="off">
-                            <div class="border m3 m3 border-end border-light">
-                                <button type="submit" class="btn btn-warning">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="dark" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div id="search-results-item" hx-indicator="loading">
-                        </div>
-                    </form>
+                <div class="col-1 text-center d-flex align-items-center opacity-75" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-telephone-inbound" viewBox="0 0 16 16">
+                        <path d="M15.854.146a.5.5 0 0 1 0 .708L11.707 5H14.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 1 0v2.793L15.146.146a.5.5 0 0 1 .708 0zm-12.2 1.182a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"></path>
+                    </svg>
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-6 col-5">
-                    <div class="input-group fs-4 mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="58" fill="currentColor" class="bi bi-telephone-inbound" viewBox="0 0 16 16">
-                            <path d="M15.854.146a.5.5 0 0 1 0 .708L11.707 5H14.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 1 0v2.793L15.146.146a.5.5 0 0 1 .708 0zm-12.2 1.182a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                <div class="col-1 d-flex justify-content-center offset-1">
+                    <button type="button" class="btn position-relative opacity-75" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                         </svg>
-                        <div class="col-lg-1 col-md-1 col-sm-2 col-2">
-                            <h6 class="phone-number offset-10 mt-2">
-                                <a href="tel:+380636848019" style="color: black;">0636848019</a>
-                                <a href="tel:+380679800500" style="color: black;">0975500500</a>
-                            </h6>
-                        </div>
+                    </button>
+                    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                      <div class="offcanvas-header">
+                        <input type="search" class="form-control search-main" placeholder="Введіть назву товару або бренду..." aria-label="Search" name="q" hx-get="{% url 'search_results' %}" hx-trigger="keyup changed, search, delay:2000ms" hx-swap="innerHTML transition:true" hx-target="#search-results-item" hx-vals-conditional="this.value.length >= 3" autocomplete="off">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                      </div>
+                        <div id="search-results-item" hx-indicator="loading"></div>
                     </div>
                 </div>
-                <!--  cart button  -->
-                <div class="col-lg-1 col-md-1 col-sm-2 col-2 d-flex">
-                    <button class="btn btn-sm btn-warning">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="50" fill="currentColor" class="bi bi-cart2" viewBox="0 4 16 16">
-                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
-                        </svg>
+                <div class="col-1 text-center d-flex align-items-center opacity-75">
+                    <button type="button" class="btn position-relative">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                      </svg>
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                        0+
+                        <span class="visually-hidden">unread messages</span>
+                      </span>
                     </button>
                 </div>
-                <!--  comparsion button  -->
-                <div class="col-lg-1 col-md-1 col-sm-2 col-2 d-flex">
-                    <button class="btn btn-sm btn-warning">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="50" fill="currentColor" class="bi bi-layout-split" viewBox="0 3 16 16">
-                          <path d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm8.5-1v12H14a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H8.5zm-1 0H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h5.5V2z"/>
-                        </svg>
-                    </button>
-                </div>
-                <!--  menu button  -->
-                <div class="col-lg-1 col-md-1 col-sm-2 col-2 d-flex">
+                <div class="col-1 d-flex align-items-center offset-1">
                     <div class="btn-group m">
-                      <button class="btn btn-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="45" fill="currentColor" class="bi bi-menu-up" viewBox="0 3 16 16">
-                            <path d="M7.646 15.854a.5.5 0 0 0 .708 0L10.207 14H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3.793l1.853 1.854zM1 9V6h14v3H1zm14 1v2a1 1 0 0 1-1 1h-3.793a1 1 0 0 0-.707.293l-1.5 1.5-1.5-1.5A1 1 0 0 0 5.793 13H2a1 1 0 0 1-1-1v-2h14zm0-5H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v2zM2 11.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 0-1h-8a.5.5 0 0 0-.5.5zm0-4a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11a.5.5 0 0 0-.5.5zm0-4a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 0-1h-6a.5.5 0 0 0-.5.5z"/>
-                        </svg>
-                      </button>
-                      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                        <button type="button" class="btn opacity-75" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"></path>
+                            </svg>
+                        </button>
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                           <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="offcanvasRightLabel">Меню</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -78,7 +60,7 @@
                                   <li class="list-group-item border-warning">And a fifth one</li>
                               </ul>
                           </div>
-                      </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -26,6 +26,10 @@
         border-color: #ffffff;
         box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
     }
+    .search-main:focus {
+    border-color: #ededed;
+    box-shadow: 0 0 0 0.2rem rgba(227, 186, 52, 0.5);
+}
     .card custom-card {
         max-width: 14rem;
     }
@@ -33,14 +37,27 @@
         border-color: #181a18;
         box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
     }
-    .offcanvas{
+    .offcanvas-end {
      width:60% !important;
     }
    @media (min-width: 992px) {
-    .offcanvas {
+    .offcanvas-end {
     width: 30% !important; /* Змініть ширину на вашу потребу */
   }
 }
+
+.offcanvas-start {
+     width:60% !important;
+    }
+   @media (min-width: 992px) {
+    .offcanvas-start {
+    width: 30% !important; /* Змініть ширину на вашу потребу */
+  }
+}
+.offcanvas-top {
+     height:13% !important;
+    }
+
 #quick_view {
     position: absolute;
     z-index: 1000;

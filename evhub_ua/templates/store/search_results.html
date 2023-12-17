@@ -3,7 +3,7 @@
         {% if results %}
             {% for item in results %}
             <a href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
-                <li class="list-group-item list-group-item-action shadow rounded">
+                <li class="list-group-item list-group-item-action shadow rounded-0">
                     <div class="row">
                         <div class="col-2 d-flex align-items-center justify-content-center">
                             <div class="image container">
@@ -20,10 +20,10 @@
             </a>
             {% endfor %}
         {% else %}
-            <li class="list-group-item list-group-item-action shadow rounded">
+            <li class="list-group-item list-group-item-action shadow rounded-0">
                 <div class="col-10 d-flex align-items-center justify-content-center">
                     <div class="title container">
-                        Нажаль по вашому запиту нічого не знайдено
+                        <h5>Нажаль по вашому запиту нічого не знайдено</h5>
                     </div>
                 </div>
         {% endif %}
