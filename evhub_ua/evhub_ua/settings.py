@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-mzu#vp7)2fw@xa*y0do9i52r+s+q)p0j2^daz_7icqdynd64!k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.31.27', '192.168.1.115', '192.168.1.227', '127.0.0.1', '192.168.1.102']
+ALLOWED_HOSTS = ['192.168.31.27', '192.168.1.115', '192.168.1.227', '127.0.0.1', '192.168.1.102', '192.168.0.102']
 
 
 # Application definition
@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'store',
+    'view_breadcrumbs',
+    'favorites',
+    'comparison',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'utils.context_processors.header_render'
             ],
         },
     },

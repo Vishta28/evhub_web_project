@@ -17,6 +17,12 @@ class StoreFilter:
 		categories = ChargersItems.objects.values_list('category', flat=True).distinct()
 		return {'types': types, 'powers_amps': powers_amps, 'brands': brands, 'phases': phases, 'categories': categories}
 
+def header_view(request):
+	return render(request, 'main.html', {'header_view': header_view})
+
+def footer_view(request):
+	return render(request, 'main.html', {'footer_view': footer_view})
+
 # стартова сторінка
 def welcome_page(request):
 	user_agent = get_user_agent(request)
@@ -24,6 +30,9 @@ def welcome_page(request):
 		return render(request, 'store/welcome_mob.html')
 	else:
 		return render(request, 'store/welcome.html')
+
+def contact_info(request):
+	return render(request, 'store/contact_info.html')
 
 # сторінка де перелічені моделі товарів
 class ItemsModel(ListView):
@@ -101,7 +110,7 @@ class StorePageView(ListView, StoreFilter):
 			'price_up': 'price',
 			'price_down': '-price',
 			'date_new': '-time',
-			'date_old': 'time'
+			'in_stock': '-in_stock',
 		}
 		sort = self.request.GET.get('sort')
 		if sort in sorting_options:

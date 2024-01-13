@@ -1,0 +1,26 @@
+
+<nav class="breadcrumb">
+    <ul class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <p>Number of ancestors: {{ page.get_ancestors|length }}</p>
+            <a class="breadcrumb-link" itemprop="item" href="/">
+                <span itemprop="name">Головна</span>
+            </a>
+            <meta itemprop="position" content="1" />
+        </li>
+
+        <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="breadcrumb-link" itemprop="item" href="https://example.com/dresses/real">
+                <span itemprop="name">Real Dresses</span>
+            </a>
+            <meta itemprop="position" content="2" />
+        </li>
+
+        <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="breadcrumb-link" itemprop="item" href="https://example.com/dresses/real">
+                <span itemprop="name">{{ self.title }}</span>
+            </a>
+            <meta itemprop="position" content="3" />
+        </li>
+    </ul>
+</nav>

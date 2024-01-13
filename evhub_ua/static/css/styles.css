@@ -1,8 +1,3 @@
-.col-lg-2 col-md-3 col-sm-6 col-5 {
-    position: relative;
-    overflow: visible;
-}
-
 #search-results-item {
     position: relative;
     overflow: visible;
@@ -13,9 +8,16 @@
     z-index: 999;
 }
 
-.card:hover {
-        border: 1px solid orange;
-    }
+#item-card:hover {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    transform: scale(1.01);
+    z-index: 1;
+}
+#model-card:hover {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    transform: scale(1.01);
+    z-index: 1;
+}
     #welcome-card1:hover, #welcome-card2:hover, #welcome-card3:hover, #welcome-card4:hover:hover {
         border: none;
     }
@@ -38,13 +40,8 @@
         box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
     }
     .offcanvas-end {
-     width:60% !important;
+     width:75% !important;
     }
-   @media (min-width: 992px) {
-    .offcanvas-end {
-    width: 30% !important; /* Змініть ширину на вашу потребу */
-  }
-}
 
 .offcanvas-start {
      width:60% !important;
@@ -83,4 +80,22 @@
 .btn-close:focus {
     border-color: #181a18;
     box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 30px; /* Змініть це значення за потреби */
+}
+.footer {  /* Selects text inside a <p> tag that is inside a .footer <div> */
+   margin-bottom: 0; /* removes default <p> tag margin from the bottom */
+}
+body {
+  padding-bottom: 0px !important;
+  margin-bottom: -40px !important;
+}
+footer.well{
+  margin-bottom: -20px !important;
+}
+[data-loading] {
+  display: none;
 }

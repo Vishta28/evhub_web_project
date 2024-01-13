@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-dialog-centered">
+<div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
         <div class="modal-header row border-0">
             <div class="col-10">
@@ -8,34 +8,41 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
         </div>
-        <div class="card p-3">
+        <div class="d-lg-none d-xl-none d-xxl-none card rounded-4 p-3">
             <small class="text-sm">{{chargers_detail.small_description}}</small>
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-6">
-                    <div class="card example-1 border-0 overflow-scroll" style="max-height: 300px;">
+                <div class="col-6 col-lg-4">
+                    <div class="card example-1 border-0 overflow-auto" style="max-height: 300px;">
                         <div class="card-body">
                             {% if chargers_detail.image %}
-                            <img src="{{ chargers_detail.image.url }}" class="bd-placeholder-img card-img-top" alt="...">
+                            <a href="{{ chargers_detail.image.url }}">
+                                <img src="{{ chargers_detail.image.url }}" class="bd-placeholder-img card-img-top" alt="...">
+                            </a>
                             {% endif %}
                             {% if chargers_detail.attachments.all %}
                             {% for attachment in chargers_detail.attachments.all %}
-                            <img src="{{ attachment.images.url }}" class="bd-placeholder-img card-img-top" alt="...">
+                            <a href="{{ attachment.images.url }}">
+                                <img src="{{ attachment.images.url }}" class="bd-placeholder-img card-img-top" alt="...">
+                            </a>
                             {% endfor %}
                             {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                  <ul class="list-group list-group-flush text-center small">
-                    <li class="list-group-item">Тип роз'єму: {{chargers_detail.type}}</li>
-                    <li class="list-group-item">Потужність, ампери: {{chargers_detail.power_amps}}A</li>
-                    <li class="list-group-item">Кількість фаз: {{chargers_detail.phases}}</li>
-                    <li class="list-group-item">Довжина кабелю: {{chargers_detail.cable_length}} метрів</li>
-                    <li class="list-group-item">Захист від вологи: {{chargers_detail.protection}}</li>
-                    <li class="list-group-item">Бренд: {{chargers_detail.brand}}</li>
-                  </ul>
+                <div class="col-6 col-lg-4 d-flex align-items-center">
+                    <ul class="list-group list-group-flush text-center small">
+                        <li class="list-group-item">Тип роз'єму: {{chargers_detail.type}}</li>
+                        <li class="list-group-item">Потужність, ампери: {{chargers_detail.power_amps}}A</li>
+                        <li class="list-group-item">Кількість фаз: {{chargers_detail.phases}}</li>
+                        <li class="list-group-item">Довжина кабелю: {{chargers_detail.cable_length}} метрів</li>
+                        <li class="list-group-item">Захист від вологи: {{chargers_detail.protection}}</li>
+                        <li class="list-group-item">Бренд: {{chargers_detail.brand}}</li>
+                    </ul>
+                </div>
+                <div class="d-none d-lg-block col-lg-4 card p-3 border-0 border-start border-warning rounded-0">
+                    <small class="text-sm">{{chargers_detail.small_description}}</small>
                 </div>
             </div>
         </div>

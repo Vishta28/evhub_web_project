@@ -39,7 +39,7 @@ class ChargersItems(models.Model):
 		('pending', 'Під замовлення'),
 	]
 
-	title = models.CharField('Назва', max_length=50)
+	title = models.CharField('Назва', max_length=70)
 	slug = AutoSlugField(populate_from='title', max_length=40, unique=True, default=None)
 	price = models.DecimalField('Ціна', max_digits=8, decimal_places=2)
 	small_description = models.TextField('Короткий опис', max_length=600)
