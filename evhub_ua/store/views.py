@@ -1,11 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django_user_agents.utils import get_user_agent
 from .models import ChargerItemModel, ChargersItems, Category
 from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.db.models import Q
-from django.http import QueryDict
-from urllib.parse import urlencode
+
 
 
 class StoreFilter:
@@ -17,11 +16,6 @@ class StoreFilter:
 		categories = ChargersItems.objects.values_list('category', flat=True).distinct()
 		return {'types': types, 'powers_amps': powers_amps, 'brands': brands, 'phases': phases, 'categories': categories}
 
-def header_view(request):
-	return render(request, 'main.html', {'header_view': header_view})
-
-def footer_view(request):
-	return render(request, 'main.html', {'footer_view': footer_view})
 
 # стартова сторінка
 def welcome_page(request):
@@ -48,18 +42,44 @@ class ItemsModel(ListView):
 class ItemListPage(ListView):
 	model = ChargersItems
 	template_name = 'store/items_list.html'
-	context_object_name = 'items'
+	context_object_name = 'model_items'
 
 	def get_queryset(self):
 		item_model = self.kwargs.get('model')
-		return ChargersItems.objects.filter(model__slug=item_model)
+		query = ChargersItems.objects.filter(model__slug=item_model)
+		type = ChargersItems.objects.filter(model__slug=item_model).values('type').distinct()
+		phases = ChargersItems.objects.filter(model__slug=item_model).values('phases').distinct()
+		power_amps = ChargersItems.objects.filter(model__slug=item_model).values('power_amps').distinct()
+		context = {
+			'type': type,
+			'phases': phases,
+			'power_amps': power_amps,
+			'query': query
+		}
+		return context
+
 
 # детальна сторінка товару
 class ItemDetail(DetailView):
 	model = ChargersItems
 	template_name = 'store/item_detail.html'
-	context_object_name = 'chargers_detail'
 	slug_url_kwarg = 'charger_slug'
+	context_object_name = 'chargers_detail'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+
+		session_comparison = self.request.session.get('comparison')
+		if session_comparison:
+			item_exist_comparison = next((item for item in session_comparison if item['slug'] == context['chargers_detail'].slug), None)
+			context['item_exist_comparison'] = item_exist_comparison
+
+		session_favorites = self.request.session.get('favorites')
+		if session_favorites:
+			item_exist_favorites = next((item for item in session_favorites if item['slug'] == context['chargers_detail'].slug), None)
+			context['item_exist_favorites'] = item_exist_favorites
+
+		return context
 
 
 # сторінка магазину з фільтрами
@@ -146,9 +166,7 @@ class StorePageView(ListView, StoreFilter):
 		for value in values:
 			if value:
 				type_filters |= Q(type=value)
-				print(type_filters)
 
-		print(type_filters)
 		power_amps_filters = Q()
 		values = self.request.GET.getlist('power_amps')
 		for value in values:

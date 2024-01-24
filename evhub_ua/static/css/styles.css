@@ -1,70 +1,114 @@
+/* загальний розмір елементів сторінки */
+html {
+  position: relative;
+  min-height: 100%;
+  padding-bottom:90px;
+}
+body {
+  margin-bottom: 90px;
+}
+footer {
+  position: absolute;
+  bottom: -30px;
+  width: 100%;
+  height: 130px;
+}
+
+/* стиль елементів сторінки search-result в header */
+.search-results {
+    position: absolute;
+    z-index: 999;
+}
 #search-results-item {
     position: relative;
     overflow: visible;
 }
 
-.search-results {
-    position: absolute;
-    z-index: 999;
+.form-control:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
 }
 
+/* стиль елементів з категоріми товарів на головній сторінці welcome */
+#welcome-card1:hover, #welcome-card2:hover, #welcome-card3:hover, #welcome-card4:hover:hover {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  transform: scale(1.02);
+  z-index: 1;
+  transition: transform 250ms;
+}
+
+/* стиль карток товарів на сторінці item-list та store */
 #item-card:hover {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    transform: scale(1.01);
+    border-bottom: 2px solid orange !important;
+    transform: scale(1.02);
     z-index: 1;
+    transition: transform 250ms;
 }
+
+#item-card-mob:hover {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  transform: scale(1.02);
+  z-index: 1;
+  transition: transform 250ms;
+}
+
+/* стиль елементів з моделями товарів items-model */
 #model-card:hover {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    transform: scale(1.01);
-    z-index: 1;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  transform: scale(1.01);
+  z-index: 1;
 }
-    #welcome-card1:hover, #welcome-card2:hover, #welcome-card3:hover, #welcome-card4:hover:hover {
-        border: none;
-    }
-    a {
-    text-decoration: none;
-    }
-    .form-control:focus {
-        border-color: #ffffff;
-        box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
-    }
-    .search-main:focus {
+#model-card:hover{
+  transition: transform 250ms;
+}
+
+a {
+text-decoration: none;
+}
+
+/* стиль елементів з категоріями (accordion) товарів welcome.mob */
+.accordion-button:focus {
+  border-color: #181a18;
+  box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
+}
+
+/* стиль кнопки меню мобільна версія */
+.offcanvas-end {
+  width:75% !important;
+}
+
+/* стиль кнопки фільтр для сторінок store */
+.offcanvas-start {
+  width:60% !important;
+}
+@media (min-width: 992px) {
+  .offcanvas-start {
+    width: 30% !important;
+  }
+}
+
+/* стиль пошуку header.mob */
+.offcanvas-top {
+  height:13% !important;
+}
+.search-main:focus {
     border-color: #ededed;
     box-shadow: 0 0 0 0.2rem rgba(227, 186, 52, 0.5);
 }
-    .card custom-card {
-        max-width: 14rem;
-    }
-    .accordion-button:focus {
-        border-color: #181a18;
-        box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
-    }
-    .offcanvas-end {
-     width:75% !important;
-    }
 
-.offcanvas-start {
-     width:60% !important;
-    }
-   @media (min-width: 992px) {
-    .offcanvas-start {
-    width: 30% !important; /* Змініть ширину на вашу потребу */
-  }
-}
-.offcanvas-top {
-     height:13% !important;
-    }
-
+/* стиль швидкого перегляду товарів quick_view */
 #quick_view {
     position: absolute;
     z-index: 1000;
-    /* Додайте інші стилі за потребою */
 }
+
+/* стиль пагінації */
 .pagination .page-link:focus {
     border-color: #ffffff;
     box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
 }
 
+/* стиль списку атрибутів фільтру store */
 .list-group .list-group-item .form-check-input:focus {
     border-color: #ffffff;
     box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
@@ -74,28 +118,86 @@
     box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
 }
 .form-check-input:checked {
-  background-color: #e8ab33; /* Змініть колір фону на ваш вибір */
-  border-color: #e8ab33; /* Змініть колір рамки на ваш вибір */
+  background-color: #e8ab33;
+  border-color: #e8ab33;
 }
+
+/* стиль кнопки close сторінки comparison */
 .btn-close:focus {
     border-color: #181a18;
     box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
 }
 
+/* стиль галреї фото item_detail */
 .carousel-control-prev,
 .carousel-control-next {
-    width: 30px; /* Змініть це значення за потреби */
+    width: 30px;
 }
-.footer {  /* Selects text inside a <p> tag that is inside a .footer <div> */
-   margin-bottom: 0; /* removes default <p> tag margin from the bottom */
+
+/* стиль footer */
+.footer {
+   margin-bottom: 0;
 }
-body {
-  padding-bottom: 0px !important;
-  margin-bottom: -40px !important;
-}
-footer.well{
-  margin-bottom: -20px !important;
-}
+
+/* htmx hx-ext */
 [data-loading] {
   display: none;
 }
+
+/* стиль ефектів кнопок menu header */
+.header-menu:hover {
+  opacity: 0.75;
+}
+
+/* стиль ефектів кнопок нижнього меню хедера menu-header-bottom */
+.nav-link-header-bottom:hover {
+    border-bottom: 2px solid orange !important;
+}
+.nav-link-header-bottom:hover {
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 250ms ease-in-out;
+}
+
+/* стиль кнопки call-button в header */
+.call-button {
+  width: 60px;
+  height: 40px;
+  margin-bottom: 10px;
+  border: none;
+}
+
+.call-button:hover {
+  transform: scale(1.1);
+  transition: transform 250ms;
+}
+
+.call-image {
+  display: block;
+  width: 70px;
+  height: 70px;
+  position: relative;
+  bottom: 16px;
+  right: 10px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.btn-call-mob{
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+
+.call-image-mob{
+  display: block;
+  width: 85px;
+  height: 85px;
+  position: relative;
+  bottom: 27px;
+  right: 30px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+

@@ -1,4 +1,4 @@
-{% extends 'store/main.html' %}
+{% extends 'main/main.html' %}
 
 
 {% block title %}
@@ -121,7 +121,7 @@
         </div>
         {% for item in items %}
         <div class="col-6 col-lg-4">
-            <div class="card custom-card border-0" id="model-card">
+            <div class="card custom-card border-0" id="item-card-mob">
             <!--  top card  -->
             {% if item.image %}
                 <a class="card-image" href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
@@ -142,7 +142,7 @@
                 </button>
               <div class="card-body">
                   <h6 class="text-muted fw-normal small">{{item.category}}</h6>
-                  <p class="card-title text-start fs-6 fw-light">{{item.title}}</p>
+                  <p class="card-title text-start fs-6 fw-light bg-light">{{item.title}}</p>
                   <p class="fw-semibold">{{item.price}} ₴</p>
                   <div class="d-flex justify-content-center mb-3">
                       {% if item.in_stock == 'True' %}
@@ -171,7 +171,6 @@
                       {% endif %}
                   </div>
               </div>
-                <!--  down card  -->
             </div>
             </div>
         {% endfor %}

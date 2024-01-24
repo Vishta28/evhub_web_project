@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.views.generic import DetailView, TemplateView, ListView
+from django.shortcuts import redirect
+from django.views.generic import DetailView, ListView
 
 from store.models import ChargersItems
 
@@ -12,20 +12,38 @@ class ComparisonView(ListView):
 class AddToComparisonView(DetailView):
 	def post(self, request):
 		slug = request.POST.get('slug')
+		user_agent = request.POST.get('user_agent')
+		print(user_agent)
 
 		# Отримуємо характеристики товару за допомогою slug
 
-		# Якщо 'favorites' немає, то створ.ємо його як пустий список
+		# Якщо 'favorites' немає, то створюємо його як пустий список
 		if request.session.get('comparison') is None:
 			request.session['comparison'] = []
 		else:
 			request.session['comparison'] = list(request.session['comparison'])
+		print(len(request.session['comparison']), 'len')
 
-		request.session['comparison'].append({
-			'slug': slug,
-		})
-		request.session.modified = True
-		print(request.session['comparison'])
+		item_exist = next((item for item in request.session['comparison'] if item['slug'] == slug), None)
+
+		if user_agent == 'True':
+			if len(request.session['comparison']) >= 2:
+				pass
+			else:
+				if not item_exist:
+					request.session['comparison'].append({
+						'slug': slug,
+					})
+					request.session.modified = True
+		else:
+			if len(request.session['comparison']) >= 4:
+				pass
+			else:
+				if not item_exist:
+					request.session['comparison'].append({
+						'slug': slug,
+					})
+					request.session.modified = True
 
 		return redirect('comparison')
 
@@ -46,3 +64,4 @@ class DeleteFromComparisonView(DetailView):
 			request.session.modified = True
 
 		return redirect('comparison')
+

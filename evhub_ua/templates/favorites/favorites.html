@@ -1,4 +1,4 @@
-{% extends 'store/main.html' %}
+{% extends 'main/main.html' %}
 
 
 {% block title %}
@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-lg mt-2 position-relative">
+<div class="container-lg position-relative">
     <div class="container-lg">
         <div class="row mt-4">
             <div class="col-lg-10 col-sm-12">
@@ -19,14 +19,14 @@
                         {% for chargers in chargers_detail%}
                             {% if item.slug == chargers.slug %}
                                 <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="d-block mx-auto card position-relative rounded-0" id="model-card" style="width: 16rem;">
+                                    <div class="d-block mx-auto card position-relative rounded-0" id="model-card" style="width: 15rem;">
 
                                         {% if chargers.image %}
                                         <a href="{% url 'item_detail' category=chargers.category.slug model=chargers.model.slug charger_slug=chargers.slug %}">
-                                            <img src="{{ chargers.image.url }}" class="bd-placeholder-img card-img-top" width="50%" height="240">
+                                            <img src="{{ chargers.image.url }}" class="bd-placeholder-img card-img-top" width="50%" height="220">
                                         </a>
 
-                                        <!--форма для видалення товару-->
+                                        <!--delete form close button-->
                                         <form method="post" action="{% url 'remove_from_favorites' %}">
                                             {% csrf_token %}
                                             <input type="hidden" name="slug" value="{{item.slug}}">
@@ -51,6 +51,12 @@
                             {%endif%}
                         {%endfor%}
                     {% endfor %}
+                {% else %}
+                <div class="container-lg">
+                    <div class="container bg-light mt-2 mb-2">
+                        <p class="fw-5">До списку вподобань не додано жодного товару. Можете переглянути товари на сторінці <a href="{% url 'store' %}" class="link-warning link-underline">магазину</a></p>
+                    </div>
+                </div>
                 {% endif %}
                 </div>
             </div>

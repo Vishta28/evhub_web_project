@@ -51,8 +51,5 @@ class DeleteFromFavoritesView(View):
 
 		return redirect('favorites')
 
-def favorite_button_active_view(request):
-	return render(request, 'favorites/favorite_button_active.html')
-
 
 

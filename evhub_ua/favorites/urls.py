@@ -5,5 +5,4 @@ urlpatterns = [
     path('favorites/', views.FavoritesView.as_view(), name='favorites'),
     path('favorites/add/',views. AddToFavoritesView.as_view(), name='add_to_favorites'),
     path('favorites/remove/', views.DeleteFromFavoritesView.as_view(), name='remove_from_favorites'),
-    path('favorite_button_active/', views.favorite_button_active_view, name='favorite_button_active'),
 ]

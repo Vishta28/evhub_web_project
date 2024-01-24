@@ -1,111 +1,119 @@
-{% extends 'store/main.html' %}
+{% extends 'main/main.html' %}
 
 {% block title %}
 Головна сторінка
 {% endblock %}
 
 {% block content %}
+<div class="container-sm">
+    <div class="mt-2 mb-2">
+        <button class="btn btn-dark opacity-75 rounded-0 fs-6 fw-semibold w-100">Каталог товарів
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="orange" class="bi bi-grid-1x2-fill" viewBox="0 1 16 16">
+                <path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1z"/>
+            </svg>
+        </button>
+    </div>
+  <div class="accordion accordion-flush m-0 p-1">
+    <!--  charging stations menu  -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingOne">
+        <button class="accordion-button collapsed border-start border-3 border-warning  bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          <b>Зарядні пристрої для електромобілів</b>
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+        <div class="card text-dark border-0">
+            <a href="{% url 'items_model' category='charging_stations' %}" style="color: black;">
+              {% load static %} <img src="{% static 'store/charger_category_brands.png' %}" class="card-img opacity-25" alt="image">
+              <div class="card-img-overlay">
+                <p class="card-text-dark">Зарядні пристрої для електромобілів це основний гаджет котрий має бути у кожного електромобіліста.</p>
+                <button type="button" class="btn btn-warning rounded-0">Переглянути</button>
+              </div>
+            </a>
+        </div>
+      </div>
+    </div>
+    <!--  charging cables menu  -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingTwo">
+        <button class="accordion-button collapsed border-start border-3 border-warning bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          <b>Зарядні кабелі для електромобілів</b>
+        </button>
+      </h2>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+        <div class="card text-dark border-0">
+            <a href="{% url 'items_model' category='charging_cables' %}" style="color: black;">
+              {% load static %} <img src="{% static 'store/cables_category_new.png' %}" class="card-img opacity-50" alt="image">
+              <div class="card-img-overlay">
+                <p class="card-text-dark">Зарядні пристрої для електромобілів це основний гаджет котрий має бути у кожного електромобіліста.</p>
+                <button type="button" class="btn btn-warning rounded-0">Переглянути</button>
+              </div>
+            </a>
+        </div>
+      </div>
+    </div>
+    <!--  plugs menu  -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingThree">
+        <button class="accordion-button collapsed border-start border-3 border-warning bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          <b>Розетки та перехідники</b>
+        </button>
+      </h2>
+      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+        <div class="card text-dark border-0">
+            <a href="ссылка" style="color: black;">
+              {% load static %} <img src="{% static 'store/Rozetki_category_new.png' %}" class="card-img opacity-50" alt="image">
+              <div class="card-img-overlay">
+                <p class="card-text-dark">Зарядні пристрої для електромобілів це основний гаджет котрий має бути у кожного електромобіліста.</p>
+                <button type="button" class="btn btn-warning rounded-0">Переглянути</button>
+              </div>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
 
-<div class="accordion accordion-flush m-0 p-1">
-  <!--  charging stations menu  -->
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingOne">
-      <button class="accordion-button collapsed border-start border-3 border-warning  bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        <b>Зарядні пристрої для електромобілів</b>
-      </button>
-    </h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-      <div class="card text-dark">
-          <a href="{% url 'items_model' category='charging_stations' %}" style="color: black;">
-            {% load static %} <img src="{% static 'store/charger_category_brands.png' %}" class="card-img opacity-25" alt="image">
-            <div class="card-img-overlay">
-              <p class="card-text-dark">Зарядні пристрої для електромобілів це основний гаджет котрий має бути у кожного електромобіліста.</p>
-              <button type="button" class="btn btn-warning rounded-0">Переглянути</button>
-            </div>
-          </a>
-      </div>
-    </div>
-  </div>
-  <!--  charging cables menu  -->
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingTwo">
-      <button class="accordion-button collapsed border-start border-3 border-warning bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        <b>Зарядні кабелі для електромобілів</b>
-      </button>
-    </h2>
-    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-      <div class="card text-dark">
-          <a href="{% url 'items_model' category='charging_cables' %}" style="color: black;">
-            {% load static %} <img src="{% static 'store/cables_category_new.png' %}" class="card-img opacity-50" alt="image">
-            <div class="card-img-overlay">
-              <p class="card-text-dark">Зарядні пристрої для електромобілів це основний гаджет котрий має бути у кожного електромобіліста.</p>
-              <button type="button" class="btn btn-warning rounded-0">Переглянути</button>
-            </div>
-          </a>
-      </div>
-    </div>
-  </div>
-  <!--  plugs menu  -->
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingThree">
-      <button class="accordion-button collapsed border-start border-3 border-warning bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-        <b>Розетки та перехідники</b>
-      </button>
-    </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-      <div class="card text-dark">
-          <a href="ссылка" style="color: black;">
-            {% load static %} <img src="{% static 'store/Rozetki_category_new.png' %}" class="card-img opacity-50" alt="image">
-            <div class="card-img-overlay">
-              <p class="card-text-dark">Зарядні пристрої для електромобілів це основний гаджет котрий має бути у кожного електромобіліста.</p>
-              <button type="button" class="btn btn-warning rounded-0">Переглянути</button>
-            </div>
-          </a>
-      </div>
-    </div>
-  </div>
-</div>
-<br>
+  <!--  carousel  -->
 
-<!--  carousel  -->
-
-<div id="carouselExampleDark" class="carousel carousel-dark slide m-0 p-1" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <div id="carouselExampleDark" class="carousel carousel-dark slide m-0 p-1" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="10000">
+        {% load static %}<img src="{% static 'store/banner_welcome_mob_brands.jpg' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>First slide label</h5>
+          <p>Some representative placeholder content for the first slide.</p>
+        </div>
+      </div>
+      <div class="carousel-item" data-bs-interval="2000">
+        {% load static %}<img src="{% static 'store/banner_welcome_mob_brands2.png' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Second slide label</h5>
+          <p>Some representative placeholder content for the second slide.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        {% load static %}<img src="{% static 'store/banner_welcome_mob_brands3.jpg' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Third slide label</h5>
+          <p>Some representative placeholder content for the third slide.</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      {% load static %}<img src="{% static 'store/banner_welcome_mob_brands.jpg' %}" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item" data-bs-interval="2000">
-      {% load static %}<img src="{% static 'store/banner_welcome_mob_brands2.png' %}" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      {% load static %}<img src="{% static 'store/banner_welcome_mob_brands3.jpg' %}" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
 
 {% endblock %}
