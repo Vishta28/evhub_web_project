@@ -73,6 +73,7 @@ def generate_filename(instance, filename):
     new_filename = f"{slugify(base_filename)}_{instance.pk}{file_extension}"
     return os.path.join('images/', new_filename)
 
+# додаткові зображення товару
 class Attachment(models.Model):
 	title = models.CharField("Ім\'я файлу", max_length=200, blank=True)
 	images = models.ImageField('Галерея фото', upload_to=generate_filename)
@@ -90,10 +91,3 @@ class Attachment(models.Model):
 	class Meta:
 		verbose_name = 'Галерея фото'
 		verbose_name_plural = 'Галерея фото'
-
-
-# class MultipleImages(models.Model):
-#     name = models.CharField(max_length=255)
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     image = models.ImageField(upload_to='images/')
-#     default = models.BooleanField(default=False)

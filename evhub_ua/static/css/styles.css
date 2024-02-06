@@ -37,35 +37,6 @@ footer {
   transition: transform 250ms;
 }
 
-/* стиль карток товарів на сторінці item-list та store */
-#item-card:hover {
-    border-bottom: 2px solid orange !important;
-    transform: scale(1.02);
-    z-index: 1;
-    transition: transform 250ms;
-}
-
-#item-card-mob:hover {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
-  transform: scale(1.02);
-  z-index: 1;
-  transition: transform 250ms;
-}
-
-/* стиль елементів з моделями товарів items-model */
-#model-card:hover {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
-  transform: scale(1.01);
-  z-index: 1;
-}
-#model-card:hover{
-  transition: transform 250ms;
-}
-
-a {
-text-decoration: none;
-}
-
 /* стиль елементів з категоріями (accordion) товарів welcome.mob */
 .accordion-button:focus {
   border-color: #181a18;
@@ -77,16 +48,6 @@ text-decoration: none;
   width:75% !important;
 }
 
-/* стиль кнопки фільтр для сторінок store */
-.offcanvas-start {
-  width:60% !important;
-}
-@media (min-width: 992px) {
-  .offcanvas-start {
-    width: 30% !important;
-  }
-}
-
 /* стиль пошуку header.mob */
 .offcanvas-top {
   height:13% !important;
@@ -94,32 +55,6 @@ text-decoration: none;
 .search-main:focus {
     border-color: #ededed;
     box-shadow: 0 0 0 0.2rem rgba(227, 186, 52, 0.5);
-}
-
-/* стиль швидкого перегляду товарів quick_view */
-#quick_view {
-    position: absolute;
-    z-index: 1000;
-}
-
-/* стиль пагінації */
-.pagination .page-link:focus {
-    border-color: #ffffff;
-    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
-}
-
-/* стиль списку атрибутів фільтру store */
-.list-group .list-group-item .form-check-input:focus {
-    border-color: #ffffff;
-    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
-}
-.list-group .list-group-item .form-check-input:checked {
-    border-color: #ffffff;
-    box-shadow: 0 0 0 0.2rem rgba(93, 85, 64, 0.2);
-}
-.form-check-input:checked {
-  background-color: #e8ab33;
-  border-color: #e8ab33;
 }
 
 /* стиль кнопки close сторінки comparison */
@@ -156,6 +91,9 @@ text-decoration: none;
 .nav-link-header-bottom:hover {
     border-bottom: 2px solid transparent;
     transition: border-bottom 250ms ease-in-out;
+}
+#header-bottom:active {
+    border-bottom: 2px solid orange;
 }
 
 /* стиль кнопки call-button в header */
@@ -199,5 +137,4 @@ text-decoration: none;
   object-fit: cover;
   overflow: hidden;
 }
-
 

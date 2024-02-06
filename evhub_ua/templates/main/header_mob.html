@@ -41,7 +41,13 @@
                     <div class="offcanvas offcanvas-top bg-white" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
                         <form class="search" method="GET" action="{% url 'store' %}">
                             <div class="offcanvas-header mt-2">
-                                <input type="search" class="form-control search-main" placeholder="Введіть назву товару або бренду..." aria-label="Search" name="q" hx-get="{% url 'search_results' %}" hx-trigger="keyup changed, search, delay:2000ms" hx-swap="innerHTML transition:true" hx-target="#search-results-item" hx-vals-conditional="this.value.length >= 3" autocomplete="off">
+                                <input type="search" class="form-control search-main" placeholder="Введіть назву товару або бренду..." aria-label="Search" name="q"
+                                       hx-get="{% url 'search_results' %}"
+                                       hx-trigger="keyup changed, search, delay:2000ms"
+                                       hx-swap="innerHTML transition:true"
+                                       hx-target="#search-results-item"
+                                       hx-vals-conditional="this.value.length >= 3"
+                                       autocomplete="off">
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                         <div id="search-results-item" hx-indicator="loading"></div>

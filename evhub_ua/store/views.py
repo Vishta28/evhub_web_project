@@ -28,60 +28,6 @@ def welcome_page(request):
 def contact_info(request):
 	return render(request, 'store/contact_info.html')
 
-# сторінка де перелічені моделі товарів
-class ItemsModel(ListView):
-	model = ChargerItemModel
-	template_name = 'store/items_model.html'
-	context_object_name = 'category_model'
-
-	def get_queryset(self):
-		category = self.kwargs.get('category')
-		return ChargerItemModel.objects.filter(category__slug=category)
-
-# сторінка товарів котрі відносяться до моделі виробу
-class ItemListPage(ListView):
-	model = ChargersItems
-	template_name = 'store/items_list.html'
-	context_object_name = 'model_items'
-
-	def get_queryset(self):
-		item_model = self.kwargs.get('model')
-		query = ChargersItems.objects.filter(model__slug=item_model)
-		type = ChargersItems.objects.filter(model__slug=item_model).values('type').distinct()
-		phases = ChargersItems.objects.filter(model__slug=item_model).values('phases').distinct()
-		power_amps = ChargersItems.objects.filter(model__slug=item_model).values('power_amps').distinct()
-		context = {
-			'type': type,
-			'phases': phases,
-			'power_amps': power_amps,
-			'query': query
-		}
-		return context
-
-
-# детальна сторінка товару
-class ItemDetail(DetailView):
-	model = ChargersItems
-	template_name = 'store/item_detail.html'
-	slug_url_kwarg = 'charger_slug'
-	context_object_name = 'chargers_detail'
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-
-		session_comparison = self.request.session.get('comparison')
-		if session_comparison:
-			item_exist_comparison = next((item for item in session_comparison if item['slug'] == context['chargers_detail'].slug), None)
-			context['item_exist_comparison'] = item_exist_comparison
-
-		session_favorites = self.request.session.get('favorites')
-		if session_favorites:
-			item_exist_favorites = next((item for item in session_favorites if item['slug'] == context['chargers_detail'].slug), None)
-			context['item_exist_favorites'] = item_exist_favorites
-
-		return context
-
-
 # сторінка магазину з фільтрами
 class StorePageView(ListView, StoreFilter):
 	model = ChargersItems
@@ -194,6 +140,28 @@ class StorePageView(ListView, StoreFilter):
 		filtered_chargers = qs.filter(filters)
 
 		return filtered_chargers
+
+# детальна сторінка товару
+class ItemDetail(DetailView):
+	model = ChargersItems
+	template_name = 'store/item_detail.html'
+	slug_url_kwarg = 'charger_slug'
+	context_object_name = 'chargers_detail'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+
+		session_comparison = self.request.session.get('comparison')
+		if session_comparison:
+			item_exist_comparison = next((item for item in session_comparison if item['slug'] == context['chargers_detail'].slug), None)
+			context['item_exist_comparison'] = item_exist_comparison
+
+		session_favorites = self.request.session.get('favorites')
+		if session_favorites:
+			item_exist_favorites = next((item for item in session_favorites if item['slug'] == context['chargers_detail'].slug), None)
+			context['item_exist_favorites'] = item_exist_favorites
+
+		return context
 
 
 class SearchResults(ListView):

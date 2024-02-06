@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="row" style="width: 100%; margin: 0; padding: 0;">
+<div class="row body slide-it" style="width: 100%; margin: 0; padding: 0;">
     <div class="col-xxl-9 col-lg-12 col-md-10 mx-auto mt-2 p-3 border-light bg-light">
         <div class="row">
 
             <!--  charging stations menu  -->
             <div class="col-lg-3 col-md-6 col-6">
-                <a href="{% url 'items_model' category='charging_stations' %}">
+                <a href="{% url 'models_page' category='charging_stations' %}">
                     <div class="card text-dark shadow" id="welcome-card1">
                         {% load static %} <img src="{% static 'store/chargers_category_new4.png' %}" class="card-img opacity-75" alt="image">
                         <div class="card-img-overlay">
@@ -24,7 +24,7 @@
 
             <!--  charging cables menu  -->
             <div class="col-lg-3 col-md-6 col-6">
-                <a href="{% url 'items_model' category='charging_cables' %}">
+                <a href="{% url 'models_page' category='charging_cables' %}">
                     <div class="card text-dark shadow" id="welcome-card2">
                         {% load static %} <img src="{% static 'store/cable_category2.png' %}" class="card-img opacity-75" alt="image">
                         <div class="card-img-overlay">

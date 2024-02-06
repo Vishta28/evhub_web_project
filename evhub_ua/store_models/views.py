@@ -5,6 +5,7 @@ from store.models import ChargerItemModel, ChargersItems, Category
 from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.db.models import Q
+from store_models.forms import ConstructorOptionsForm
 
 # сторінка де перелічені моделі товарів
 class ModelView(TemplateView):
@@ -29,6 +30,7 @@ class ItemListPage(ListView):
 
 	def get_queryset(self):
 		item_model = self.kwargs.get('model')
+		form = ConstructorOptionsForm()
 		query = ChargersItems.objects.filter(model__slug=item_model)
 		type = ChargersItems.objects.filter(model__slug=item_model).values('type').distinct()
 		phases = ChargersItems.objects.filter(model__slug=item_model).values('phases').distinct()
@@ -42,6 +44,7 @@ class ItemListPage(ListView):
 			'cable_length': cable_length,
 			'item_model': item_model,
 			'query': query,
+			'form': form,
 		}
 
 		return context

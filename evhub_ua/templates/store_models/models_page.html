@@ -1,0 +1,15 @@
+{% extends 'main/main.html' %}
+
+{% block title %}
+Доступні моделі
+{% endblock %}
+
+{% block content %}
+<div class="container slide-it">
+    <div class="models_list" hx-get="{% url 'models_list' category='charging_stations' %}"
+         hx-target=".container"
+         hx-trigger="revealed"
+         hx-swap="innerHTML transition:true">
+    </div>
+</div>
+{% endblock %}

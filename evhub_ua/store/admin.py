@@ -13,4 +13,5 @@ class ChargersItemsAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(ChargerItemModel)
 admin.site.register(ChargersItems, ChargersItemsAdmin)
+admin.site.register(Attachment)
 

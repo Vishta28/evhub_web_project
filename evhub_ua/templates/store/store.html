@@ -244,7 +244,7 @@
                 {% for p in page_obj.paginator.page_range %}
                     {% if p == page_obj.number %}
                     <li class="page-item active" aria-current="page">
-                        <span class="page-link bg-secondary opacity-75 border-secondary">{{ p }}</span>
+                        <span class="page-link bg-secondary bg-light text-dark border-warning">{{ p }}</span>
                     </li>
                     {% else %}
                     <li class="page-item focus-ring">
