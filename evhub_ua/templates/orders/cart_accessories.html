@@ -1,0 +1,27 @@
+
+
+        {% for item in items %}
+        <div class="card border-0 rounded-0 p-2">
+            <div class="row border-bottom">
+                {% for image in accessories_images|get_item:item.slug|slice:":1" %}
+                    <img src="{{image}}" class=" card-image col-3" width="110%" height="110">
+                {% endfor %}
+                <p class="card-title col-5 d-flex align-items-center fs-6 fw-light">{{item.title}}</p>
+                <p class="card-title col-2 d-flex align-items-center justify-content-center fs-6 fw-normal">{{item.price}}₴</p>
+                <form class="cart-form col-1 d-flex align-items-center justify-content-center"
+                    hx-post="{% url 'add_to_cart' item.slug %}"
+                    hx-trigger="click"
+                    hx-target="#header_menu_cart_button"
+                    hx-swap="outerHTML">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn text-warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-lg d-flex align-items-center" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+

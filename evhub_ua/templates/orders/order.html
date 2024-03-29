@@ -1,0 +1,35 @@
+{% extends 'main/main.html' %}
+
+
+{% block title %}
+Сторінка товару
+{% endblock %}
+
+{% block content %}
+<div class="container-lg mt-4">
+    <div class="container border-bottom bg-light">
+        <h6 class="text-center display-6">Оформлення замовлення:</h6>
+    </div>
+    <form method="post" action="{% url 'order_confirm' %}">
+        <div class="row mt-4">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 bg-light">
+                <div class="d-flex justify-content-center"
+                           hx-get="{% url 'cart_total' %}"
+                           hx-trigger="update_cart from:body"
+                           hx-swap="innerHTML transition:true">
+                    {% include 'orders/partials/cart_total.html' %}
+                </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-warning mt-2">
+                Підтвердити замовлення
+                </button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+{% endblock %}

@@ -6,6 +6,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.db.models import Q
 from store_models.forms import ConstructorOptionsForm
+from store.utils import get_all_images
 
 # сторінка де перелічені моделі товарів
 class ModelView(TemplateView):
@@ -52,23 +53,29 @@ class ItemListPage(ListView):
 class ModelsConstructorView(ListView):
 	model = ChargersItems
 	template_name = 'store_models/constructor_results.html'
-	context_object_name = 'items_const'
+	context_object_name = 'item'
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+		queryset = self.get_queryset()
+		first_item = queryset.first()
+		print('context model:', context['item'])
 
-		if context['items_const']:
+		if context['item']:
 			session_comparison = self.request.session.get('comparison')
 			if session_comparison:
 				item_exist_comparison = next(
-					(item for item in session_comparison if item['slug'] == context['items_const'][0].slug), None)
+					(item for item in session_comparison if item['slug'] == context['item'][0].slug), None)
 				context['item_exist_comparison'] = item_exist_comparison
 
 			session_favorites = self.request.session.get('favorites')
 			if session_favorites:
 				item_exist_favorites = next(
-					(item for item in session_favorites if item['slug'] == context['items_const'][0].slug), None)
+					(item for item in session_favorites if item['slug'] == context['item'][0].slug), None)
 				context['item_exist_favorites'] = item_exist_favorites
+
+		context['chargersitems_images'] = get_all_images(first_item)
+		context['first_item'] = first_item
 
 		return context
 

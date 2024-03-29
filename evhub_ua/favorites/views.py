@@ -2,11 +2,18 @@ from store.models import ChargerItemModel, ChargersItems, Category
 from django.views.generic import DetailView, ListView, TemplateView, CreateView, View
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
+from store.utils import get_first_image
 
 class FavoritesView(ListView):
 	template_name = 'favorites/favorites.html'
 	model = ChargersItems
-	context_object_name = 'chargers_detail'
+	context_object_name = 'items'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['chargersitems_images'] = get_first_image(context)
+
+		return context
 
 class AddToFavoritesView(View):
 	def post(self, request):
@@ -15,7 +22,7 @@ class AddToFavoritesView(View):
 		# Отримуємо характеристики товару за допомогою slug
 		charger_item = get_object_or_404(ChargersItems, slug=slug)
 
-		# Якщо 'favorites' немає, то створ.ємо його як пустий список
+		# Якщо 'favorites' немає, то створюємо його як пустий список
 		if request.session.get('favorites') is None:
 			request.session['favorites'] = []
 		else:

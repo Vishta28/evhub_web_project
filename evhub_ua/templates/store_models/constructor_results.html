@@ -1,106 +1,142 @@
-{% block content%}
+{% block content %}
 <div class="container">
     <div class="row">
-    {% if items_const %}
-        {% for item in items_const %}
+    {% if item %}
+        {% for detail in item %}
         <div class="col-lg-8 col-sm-12 d-flex align-items-start justify-content-start" style="z-index: 50;">
-            {% for attachment in item.attachments.all %}
-            {% if attachment %}
-            {% if forloop.counter == 1 %}
-            <div class="position-absolute top-0 start-0 p-2">
-            {% if item_exist_favorites %}
-                <div class="d-flex justify-content-start">
-                    <div data-toggle="tooltip" data-placement="top" title="переглянути">
-                        <a href="{% url 'favorites' %}" type="sumbit" class="btn btn-white rounded-0 opacity-75 btn-lg" id="favorite_active">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="orange" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-                            </svg>
-                        </a>
+            <div id="carouselExampleFade" class="carousel carousel-dark slide carousel-slide mx-1">
+                <div class="carousel-inner">
+                    {% if chargersitems_images|get_item:first_item.slug %}
+                        {% for image in chargersitems_images|get_item:first_item.slug|slice:":1" %}
+                        <div class="carousel-item active">
+                            <img src="{{ image }}" class="img-fluid" width="100%" height="300" alt="Image">
+                        </div>
+                        {% endfor %}
+                        {% for image in chargersitems_images|get_item:first_item.slug|slice:"1:" %}
+                        <div class="carousel-item">
+                            <img src="{{ image }}" class="d-block w-100" alt="...">
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="carousel-item active">
+                        <svg class="bd-placeholder-img bd-placeholder-img-lg img-fluid" width="100%" height="250" xmlns="http://www.w3.org/2000/svg"
+                            role="img" aria-label="Placeholder: Responsive image"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"><title>Placeholder</title><rect
+                            width="100%" height="100%"
+                            fill="#868e96"></rect><text x="50%" y="50%"
+                            fill="#dee2e6" dy=".3em">Упс, немає фото</text>
+                        </svg>
                     </div>
-                </div>
-                {% else %}
-                <div class="d-flex justify-content-start">
-                    <form
-                        hx-post="{% url 'add_to_favorites' %}"
-                        hx-trigger="click"
-                        hx-swap="none">
+                    {% endif %}
 
-                        {% csrf_token %}
-                        <input type="hidden" name="slug" value="{{item.slug}}">
-                        <button type="sumbit" class="btn btn-white rounded-0 opacity-50 btn-lg" hx-get="{% url 'active_buttons' %}?q=favorites" hx-trigger="click" hx-swap="outerHTML transition:true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-                {% endif %}
-            </div>
-            <div class="position-absolute top-0 start-10 ms-5 p-2">
-            {% if item_exist_comparison %}
+<!--                    favorite button-->
+                <div class="position-absolute top-0 start-0 p-2">
+                    {% if item_exist_favorites %}
                     <div class="d-flex justify-content-start">
-                    <div data-toggle="tooltip" data-placement="top" title="переглянути">
-                        <a href="{% url 'comparison' %}" type="submit" class="btn btn-white rounded-0 opacity-75 btn-lg" id="comparison_active">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="orange" class="bi bi-layers-half mb-1" viewBox="0 0 16 16">
-                                <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882zM8 9.433 1.562 6 8 2.567 14.438 6z"/>
-                            </svg>
-                        </a>
+                        <div data-toggle="tooltip" data-placement="top" title="переглянути">
+                            <a href="{% url 'favorites' %}" type="sumbit" class="btn btn-white rounded-0 opacity-75 btn-lg" id="favorite_active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="orange" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                {% else %}
-                <div class="d-flex justify-content-start">
-                    <form
-                        hx-post="{% url 'add_to_comparison' %}"
-                        hx-trigger="click"
-                        hx-swap="none">
+                    {% else %}
+                    <div class="d-flex justify-content-start">
+                        <form
+                            hx-post="{% url 'add_to_favorites' %}"
+                            hx-trigger="click"
+                            hx-swap="none">
 
-                        {% csrf_token %}
-                        <input type="hidden" name="slug" value="{{item.slug}}">
-                        {% if user_agent.is_mobile %}
-                        <input type="hidden" name="user_agent" value="True">
-                        {% else %}
-                        <input type="hidden" name="user_agent" value="False">
-                        {% endif %}
-                        <button type="submit" class="btn btn-white rounded-0 opacity-50 btn-lg" hx-get="{% url 'active_buttons' %}?q=comparison" hx-trigger="click" hx-swap="outerHTML transition:true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-layers mb-1" viewBox="0 0 16 16">
-                                <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882zm3.515 7.008L14.438 10 8 13.433 1.562 10 4.25 8.567l3.515 1.874a.5.5 0 0 0 .47 0zM8 9.433 1.562 6 8 2.567 14.438 6z"/>
-                            </svg>
-                        </button>
-                    </form>
+                            {% csrf_token %}
+                            <input type="hidden" name="slug" value="{{item.slug}}">
+                            <button type="sumbit" class="btn btn-white rounded-0 opacity-50 btn-lg" hx-get="{% url 'active_buttons' %}?q=favorites" hx-trigger="click" hx-swap="outerHTML transition:true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
+<!--                    comparison button -->
+                <div class="position-absolute top-0 ms-5 p-2">
+                    {% if item_exist_comparison %}
+                    <div class="d-flex justify-content-end">
+                        <div data-toggle="tooltip" data-placement="top" title="переглянути">
+                            <a href="{% url 'comparison' %}" type="submit" class="btn btn-white rounded-0 opacity-75 btn-lg" id="comparison_active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="orange" class="bi bi-layers-half mb-1" viewBox="0 0 16 16">
+                                    <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882zM8 9.433 1.562 6 8 2.567 14.438 6z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="d-flex justify-content-start">
+                        <form
+                            hx-post="{% url 'add_to_comparison' %}"
+                            hx-trigger="click"
+                            hx-swap="none">
+
+                            {% csrf_token %}
+                            <input type="hidden" name="slug" value="{{item.slug}}">
+                            {% if user_agent.is_mobile %}
+                            <input type="hidden" name="user_agent" value="True">
+                            {% else %}
+                            <input type="hidden" name="user_agent" value="False">
+                            {% endif %}
+                            <button type="submit" class="btn btn-white rounded-0 opacity-50 btn-lg" hx-get="{% url 'active_buttons' %}?q=comparison" hx-trigger="click" hx-swap="outerHTML transition:true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-layers mb-1" viewBox="0 0 16 16">
+                                    <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882zm3.515 7.008L14.438 10 8 13.433 1.562 10 4.25 8.567l3.515 1.874a.5.5 0 0 0 .47 0zM8 9.433 1.562 6 8 2.567 14.438 6z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                  </button>
+                {% endfor %}
+                  </div>
+                </div>
             </div>
-            <img src="{{ attachment.images.url }}" class="img-fluid" width="100%" height="300" alt="Image">
-            {% endif %}
-            {% else %}
-            <svg class="bd-placeholder-img bd-placeholder-img-lg img-fluid" width="100%" height="250" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Responsive image"
-                preserveAspectRatio="xMidYMid slice"
-                focusable="false"><title>Placeholder</title><rect
-                width="100%" height="100%"
-                fill="#868e96"></rect><text x="50%" y="50%"
-                fill="#dee2e6" dy=".3em">Responsive image</text>
-            </svg>
-            {% endif %}
-            {% endfor %}
-            {% endfor %}
-        </div>
-        {% for item in items_const %}
-        {% if item %}
+        {% for detail in item %}
+        {% if detail %}
 
         {% if user_agent.is_mobile %}
-        <div class="col-lg-4 col-sm-12 d-flex align-items-center justify-content-start">
         {% else %}
-        <div class="col-lg-4 col-sm-12 d-flex align-items-center justify-content-start pt-5 mt-1">
+        <div class="col-lg-4 col-sm-12 d-flex align-items-center justify-content-start pt-5 mt-5">
         {% endif %}
             <div class="row">
-                <ul class="list-group col-12 list-group-flush">
-                    <li class="list-group-item">Потужність, кВт: {{item.power}} кВт</li>
-                    <li class="list-group-item">Захист від вологи: {{item.protection}}</li>
-                    <li class="list-group-item">Формфактор: {{item.form}}</li>
-                    <li class="list-group-item">Країна виробник: {{item.country}}</li>
-                    <li class="list-group-item">Гарантія: {{item.guarantee}}</li>
-                </ul>
+                <div class="container col-12">
+                    <div class="row d-flex justify-content-start">
+                        <p class="col-6">Потужність, кВт:</p>
+                        <p class="col-6 border-bottom">{{detail.power}} кВт</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-6">Захист від вологи:</p>
+                        <p class="col-6 border-bottom">{{detail.protection}}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-6">Формфактор:</p>
+                        <p class="col-6 border-bottom">{{detail.form}}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-6">Країна виробник:</p>
+                        <p class="col-6 border-bottom">{{detail.country}}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-6">Гарантія:</p>
+                        <p class="col-6 border-bottom">{{detail.guarantee}}</p>
+                   </div>
+                </div>
                 <div class="col-12">
                     <div class="row">
                         <div class="col-7 d-flex justify-content-center align-items-center">
@@ -113,7 +149,7 @@
                             </p>
                         </div>
                         <div class="col-5 d-flex align-items-center">
-                            <p class="fs-4 fw-semibold">{{item.price}} ₴</p>
+                            <p class="fs-4 fw-semibold">{{detail.price}} ₴</p>
                         </div>
                         <div class="col-12 d-flex justify-content-center">
                             <button type="button" class="btn btn-outline-dark border-top-0 border-start-0 border-end-0 rounded-0 opacity-75 btn-lg">

@@ -1,0 +1,104 @@
+{% block content %}
+<!--<style>-->
+<!--    tbody {-->
+<!--        border: none;-->
+<!--    }-->
+
+<!--    td {-->
+<!--        border: none;-->
+<!--    }-->
+<!--</style>-->
+<style>
+    tr.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+</style>
+<div class="modal-dialog modal-lg modal-dialog-scrollable rounded-2">
+    <div class="modal-content">
+        <div class="row p-2 ps-3 border">
+            <div class="col-6 d-flex justify-content-start">
+                <h5>Ваш кошик:</h5>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+        </div>
+        {% if request.session.cart %}
+        <div class="row p-3">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12"
+                        hx-get="{% url 'cart_items_total' %}"
+                        hx-trigger="update_cart from:body"
+                        hx-swap="innerHTML transition:true">
+                        {% include 'orders/partials/cart_items_total.html' %}
+                    </div>
+                    <div class="col-12 d-md-none d-lg-none">
+                        <button class="btn btn-sm btn-outline-danger rounded-0"
+                                hx-get="{% url 'update_cart' 'none' 'remove_all' %}"
+                                hx-trigger="click"
+                                hx-swap="outerHTML transition:true">
+                            Видалити всі
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="container"
+                    hx-get="{% url 'cart_total' %}"
+                    hx-trigger="update_cart from:body"
+                    hx-swap="innerHTML transition:true">
+                    {% include 'orders/partials/cart_total.html' %}
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="row p-2">
+                {% if user_agent.is_mobile %}
+                <div class="container" hx-target="closest div" hx-value="{{item.slug}}" hx-swap="outerHTML swap:1s transition:true">
+                    {% for item in cart %}
+                        {% include 'orders/partials/cart_item_mob.html' %}
+                    {% endfor %}
+                </div>
+                {% elif not user_agent.is_mobile %}
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="btn btn-sm btn-outline-danger rounded-0">
+                                        Видалити всі
+                                    </div>
+                                </th>
+                                <th class="text-muted">Назва</th>
+                                <th class="text-muted">Кількість</th>
+                                <th class="text-muted">Ціна</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody hx-target="closest tr" hx-value="{{item.slug}}" hx-swap="outerHTML swap:1s transition:true">
+                        {% for item in cart %}
+                            {% include 'orders/partials/cart_item.html' %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="{% url 'order' %}">
+                <button class="btn btn-warning rounded-0">
+                    Оформити замволення
+                </button>
+            </a>
+        </div>
+        {% else %}
+            <p>Ваш кошик порожній</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

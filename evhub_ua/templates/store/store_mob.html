@@ -123,54 +123,63 @@
         <div class="col-6 col-lg-4">
             <div class="card custom-card border-0" id="item-card-mob">
             <!--  top card  -->
-            {% if item.image %}
+            {% if chargersitems_images|get_item:item.slug %}
+                {% for image in chargersitems_images|get_item:item.slug %}
                 <a class="card-image" href="{% url 'item_detail' category=item.category.slug model=item.model.slug charger_slug=item.slug %}">
-                    <img src="{{ item.image.url }}" class="card-img-top" width="100%">
+                    <img src="{{ image }}" class="card-img-top" width="100%">
                 </a>
+                {% endfor %}
             {% else %}
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+                <svg class="bd-placeholder-img" width="100%" height="170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="25%" y="50%" fill="#dee2e6" dy=".3em">Упс, немає фото</text></svg>
             {% endif %}
-                <button type="submit" class="btn position-absolute top-0 end-0 p-2"
+                <button id="quick-view-{{item.slug}}" type="submit" class="btn position-absolute top-0 end-0 p-2"
                     hx-get="{% url 'quick_view' category=item.category.slug model=item.model.slug charger_slug=item.slug %}"
                     hx-target="#modals-here"
                     hx-trigger="click"
+                    hx-ext="loading-states"
+                    data-loading-delay="500"
                     data-bs-toggle="modal"
                     data-bs-target="#modals-here">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-fullscreen opacity-50" viewBox="0 0 16 16">
-                      <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-fullscreen opacity-50" viewBox="0 0 16 16" data-loading-class="d-none">
+                        <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
                     </svg>
+                    <div id="spinner" class="spinner-grow text-warning d-none top-0 end-0 p-2" role="status" data-loading-class-remove="d-none">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </button>
-              <div class="card-body">
-                  <h6 class="text-muted fw-normal small">{{item.category}}</h6>
-                  <p class="card-title text-start fs-6 fw-light bg-light">{{item.title}}</p>
-                  <p class="fw-semibold">{{item.price}} ₴</p>
-                  <div class="d-flex justify-content-center mb-3">
-                      {% if item.in_stock == 'True' %}
-                      <button type="button" class="btn btn-md opacity-75 border-start-0 border-end-0 border-top-0 border-warning rounded-0">
-                          Купити
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
-                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
-                          </svg>
-                      </button>
-                      {% elif item.in_stock == 'pending' %}
-                      <button type="button" class="btn btn-md opacity-75 border-start-0 border-end-0 border-top-0 border-warning rounded-0">
-                          На замовлення
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                          </svg>
-                      </button>
-                      {% elif item.in_stock == 'False' %}
-                      <button type="button" class="btn btn-md opacity-75 border-start-0 border-end-0 border-top-0 border-warning rounded-0">
-                          Не в наявності
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
-                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                          </svg>
-                      </button>
+                <div class="card-body">
+                    <h6 class="text-muted fw-normal small p-1">{{item.category}}</h6>
+                    <div class="card-title bg-light rounded-2">
+                        <p class="text-start fs-6 fw-light p-1">{{item.title}}</p>
+                    </div>
+                    <p class="fw-semibold p-1">{{item.price}} ₴</p>
+                    <div class="d-flex justify-content-center mb-3">
+                        {% if item.in_stock == 'True' %}
+                        <button type="button" class="btn btn-md border-start-0 border-end-0 border-top-0 border-warning rounded-0 opacity-75">
+                            Купити
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                            </svg>
+                        </button>
+                        {% elif item.in_stock == 'pending' %}
+                        <button type="button" class="btn btn-md opacity-75 border-start-0 border-end-0 border-top-0 border-warning rounded-0">
+                            На замовлення
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                            </svg>
+                        </button>
+                        {% elif item.in_stock == 'False' %}
+                        <button type="button" class="btn btn-md opacity-75 border-start-0 border-end-0 border-top-0 border-warning rounded-0">
+                            Не в наявності
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </button>
                       {% endif %}
-                  </div>
-              </div>
+                    </div>
+                </div>
             </div>
             </div>
         {% endfor %}

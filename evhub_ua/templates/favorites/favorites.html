@@ -16,34 +16,36 @@
                 <div class="row position-relative mt-3">
                 {% if request.session.favorites %}
                     {% for item in request.session.favorites %}
-                        {% for chargers in chargers_detail%}
-                            {% if item.slug == chargers.slug %}
+                        {% for chargersitems in items %}
+                            {% if item.slug == chargersitems.slug %}
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="d-block mx-auto card position-relative rounded-0" id="model-card" style="width: 15rem;">
 
-                                        {% if chargers.image %}
-                                        <a href="{% url 'item_detail' category=chargers.category.slug model=chargers.model.slug charger_slug=chargers.slug %}">
-                                            <img src="{{ chargers.image.url }}" class="bd-placeholder-img card-img-top" width="50%" height="220">
-                                        </a>
+                                        {% if chargersitems_images|get_item:item.slug %}
+                                            {% for image in chargersitems_images|get_item:item.slug %}
+                                            <a href="{% url 'item_detail' category=chargersitems.category.slug model=chargersitems.model.slug charger_slug=chargersitems.slug %}">
+                                                <img src="{{ image }}" class="bd-placeholder-img card-img-top" width="50%" height="220">
+                                            </a>
 
-                                        <!--delete form close button-->
-                                        <form method="post" action="{% url 'remove_from_favorites' %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="slug" value="{{item.slug}}">
-                                            <input type="hidden" name="action" value="delete">
-                                            <div class="position-absolute top-0 end-0 p-2">
-                                                <button type="submit" class="btn btn-lg btn-close"></button>
-                                            </div>
-                                        </form>
+                                            <!--delete form close button-->
+                                            <form method="post" action="{% url 'remove_from_favorites' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="slug" value="{{item.slug}}">
+                                                <input type="hidden" name="action" value="delete">
+                                                <div class="position-absolute top-0 end-0 p-2">
+                                                    <button type="submit" class="btn btn-lg btn-close"></button>
+                                                </div>
+                                            </form>
+                                            {% endfor %}
 
                                         {% else %}
                                         <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
                                         {% endif %}
 
                                         <div class="card-body">
-                                            <h6 class="card-title fw-light fs-5">{{chargers.title}}</h6>
-                                            <h6 class="text-muted fw-normal fs-6 small">{{chargers.category}}</h6>
-                                            <h6 class="text-muted fw-semibold fs-6 small">{{chargers.price}} ₴</h6>
+                                            <h6 class="card-title fw-light fs-5">{{chargersitems.title}}</h6>
+                                            <h6 class="text-muted fw-normal fs-6 small">{{chargersitems.category}}</h6>
+                                            <h6 class="text-muted fw-semibold fs-6 small">{{chargersitems.price}} ₴</h6>
                                         </div>
                                     </div>
                                     <br>

@@ -42,7 +42,7 @@
 
     <div class="container-fluid">
         <div class="row d-flex justify-content-center bg-warning bg-opacity-75">
-            <div class="col-xxl-9 col-11 mx-auto g-0">
+            <div class="col-xxl-9 col-lg-11 col-11 mx-auto ">
                 <div id="contact-modals-here"
                     class="modal modal-blur fade"
                     style="display: none"
@@ -111,15 +111,12 @@
 
                     <!--cart button-->
                     <div class="col-lg-1 col-1 d-flex align-items-center justify-content-center mb-1 opacity-75">
-                        <button type="button" class="btn position-relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
-                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
-                            </svg>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                                0+
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                        </button>
+                        <div id="header_menu_cart_button"
+                            hx-get="{% url 'header_menu_cart' %}"
+                            hx-trigger="update_cart from:body"
+                            hx-swap="innerHTML">
+                            {% include 'orders/partials/header_menu_cart_button.html' %}
+                        </div>
                     </div>
 
                     <!--acc button-->
@@ -140,7 +137,7 @@
         <div class="row bg-light d-flex justify-content-center">
             <div class="col-xxl-10 col-lg-11 col-md-12">
                 <div class="row" style="min-height: 35px;">
-                    <div class="col-3 d-flex justify-content-center align-items-center">
+                    <div class="col-3 d-flex justify-content-start align-items-center">
                         <a type="button" id="header-bottom" tabindex="0" class="nav-link-header-bottom px-2 text-secondary border-bottom border-2" hx-get="{% url 'models_list' category='charging_stations' %}"
                            hx-target=".body"
                            hx-trigger="click"
@@ -167,7 +164,7 @@
                             Розетки і перехідники
                         </a>
                     </div>
-                    <div class="col-3 d-flex justify-content-center align-items-center">
+                    <div class="col-3 d-flex justify-content-end align-items-center">
                         <a href="{% url 'favorites' %}" class="nav-link-header-bottom px-2 text-secondary border-bottom border-2">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ev-station-fill me-2 mb-1" viewBox="0 0 16 16">
                                <path d="M1 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8a2 2 0 0 1 2 2v.5a.5.5 0 0 0 1 0V9c0-.258-.104-.377-.357-.635l-.007-.008C13.379 8.096 13 7.71 13 7V4a.5.5 0 0 1 .146-.354l.5-.5a.5.5 0 0 1 .708 0l.5.5A.5.5 0 0 1 15 4v8.5a1.5 1.5 0 1 1-3 0V12a1 1 0 0 0-1-1v4h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1zm2 .5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0-.5.5m2.631 9.96H4.14v-.893h1.403v-.505H4.14v-.855h1.49v-.54H3.485V13h2.146zm1.316.54h.794l1.106-3.333h-.733l-.74 2.615h-.031l-.747-2.615h-.764z"/>

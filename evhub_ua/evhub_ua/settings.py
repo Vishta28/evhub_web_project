@@ -26,7 +26,18 @@ SECRET_KEY = 'django-insecure-mzu#vp7)2fw@xa*y0do9i52r+s+q)p0j2^daz_7icqdynd64!k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.31.27', '192.168.1.115', '192.168.1.227', '127.0.0.1', '192.168.1.101', '192.168.0.102']
+SESSION_COOKIE_AGE = 10
+
+ALLOWED_HOSTS = ['192.168.31.27', '192.168.1.115', '192.168.1.227', '127.0.0.1', '192.168.1.101', '192.168.1.102', '192.168.0.118', '192.168.1.101', '192.168.1.100']
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'live.smtp.mailtrap.io'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'api'
+EMAIL_HOST_PASSWORD = '76692482d92c40964f06837fdb4977fd'
+EMAIL_USE_TLS = True
+
 
 
 # Application definition
@@ -44,6 +55,7 @@ INSTALLED_APPS = [
     'store_models',
     'favorites',
     'comparison',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +81,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'utils.context_processors.header_render'
+                'utils.context_processors.header_render',
+                'orders.context_processors.cart'
             ],
         },
     },

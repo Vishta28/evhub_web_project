@@ -1,0 +1,46 @@
+{% if item %}
+<div class="card mb-3 border-0 p-1" id="cart-item-{{item.product.slug}}" style="max-width: 540px;">
+    <button class="btn btn-close position-absolute top-0 start-0"
+        hx-get="{% url 'update_cart' item.product.slug 'remove' %}"
+        hx-trigger="click"
+        hx-swap="innerHTML transition:true">
+    </button>
+    <div class="row g-0">
+        <div class="col-5">
+            {% if item.image %}
+                {% for image in item.image|get_item:item.product.slug|slice:":1" %}
+                    <img src="{{image}}" class="img-fluid rounded-start" alt="...">
+                {% endfor %}
+            {% endif %}
+            <div class="d-flex justify-content-center p-1">
+                <div class="row">
+                    <a class="col-4 btn btn-sm btn-outline-warning d-flex justify-content-center rounded-pill opacity-75 text-dark "
+                        hx-get="{% url 'update_cart' item.product.slug 'decrement' %}"
+                        hx-target="#cart-item-{{item.product.slug}}"
+                        hx-swap="outerHTML transition:true">
+                        <b>-</b>
+                    </a>
+
+                    <span class="col-2 d-flex justify-content-center">{{item.quantity}}</span>
+
+                    <a class="col-4 btn btn-sm btn-outline-warning d-flex justify-content-center rounded-pill opacity-75 text-dark"
+                        hx-get="{% url 'update_cart' item.product.slug 'increment' %}"
+                        hx-target="#cart-item-{{item.product.slug}}"
+                        hx-swap="outerHTML transition:true">
+                        <b>+</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-7 opacity-75">
+            <div class="card-body">
+                <h6 class="card-title">{{item.product.title}}</h6>
+                <p class="card-text">Ціна: <b class="text-warning">{{item.total_price}}₴</b></p>
+                <p class="card-text"><small class="text-body-secondary"><button class="btn btn-sm btn-warning rounded-0 mt-2">
+                    додайте аксесуари <b>+</b>
+                </button></small></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

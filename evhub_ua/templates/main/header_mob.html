@@ -1,15 +1,6 @@
 <!--  header container  -->
 <header>
     <div class=".container header">
-        <div id="contact-modals-here"
-            class="modal modal-blur fade"
-            style="display: none"
-            aria-hidden="false"
-            tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content"></div>
-            </div>
-        </div>
         <div class="header-content p-3 bg-warning bg-opacity-75">
             <!-- logo -->
             <div class="row g-0 header">
@@ -57,15 +48,12 @@
 
                 <!--cart-->
                 <div class="col-1 d-flex align-items-center opacity-75">
-                    <button type="button" class="btn position-relative">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
-                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
-                      </svg>
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                        0+
-                        <span class="visually-hidden">unread messages</span>
-                      </span>
-                    </button>
+                    <div id="header_menu_cart_button"
+                            hx-get="{% url 'header_menu_cart' %}"
+                            hx-trigger="update_cart from:body"
+                            hx-swap="innerHTML">
+                            {% include 'orders/partials/header_menu_cart_button.html' %}
+                        </div>
                 </div>
 
                 <!--main menu-->
@@ -121,6 +109,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="contact-modals-here"
+            class="modal modal-blur fade"
+            style="display: none"
+            aria-hidden="false"
+            tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content"></div>
             </div>
         </div>
     </div>

@@ -1,0 +1,22 @@
+{% if context_type == 'Type Tesla' or context_type == 'Type 1' %}
+    <select class="type form-select border-0 border-bottom rounded-0" name="phases">
+        <option value="Одна фаза">Одна фаза</option>
+    </select>
+{% elif context_type == 'Type 2' %}
+    <select class="type-sec form-select border-0 border-bottom rounded-0" name="phases">
+        <option value="Одна фаза">Одна фаза</option>
+        <option value="Три фази">Три фази</option>
+    </select>
+{% endif %}
+
+{% if context_phases == 'Одна фаза' %}
+    <select class="phases form-select border-0 border-bottom rounded-0" name="type" hx-get="{% url 'constructor_options' %}" hx-target=".type" hx-trigger="change">
+        <option value="Type Tesla">Type Tesla</option>
+        <option value="Type 1">Type 1</option>
+        <option value="Type 2">Type 2</option>
+    </select>
+{% elif context_phases == 'Три фази' %}
+    <select class="form-select border-0 border-bottom rounded-0" name="type">
+        <option value="Type 2">Type 2</option>
+    </select>
+{% endif %}

@@ -3,6 +3,31 @@ from autoslug import AutoSlugField
 from django.utils.text import slugify
 import os
 
+
+# функція для генерації імені для зображень товару
+def generate_filename(instance, filename):
+	base_filename, file_extension = os.path.splitext(filename)
+	new_filename = f"{slugify(base_filename)}_{instance.pk}{file_extension}"
+	return os.path.join('images/', new_filename)
+
+class Gallery(models.Model):
+	title = models.CharField("Ім\'я файлу", max_length=200, blank=True)
+	images = models.ImageField('Галерея фото', upload_to=generate_filename)
+
+	class Meta:
+		verbose_name = 'Галерея фото'
+		verbose_name_plural = 'Галерея фото'
+
+	def __str__(self):
+		return self.images.url
+
+	def save(self, *args, **kwargs):
+		# Вказуємо автоматичне стоврення імені файлу якщо title порожній
+		if not self.title:
+			self.title = os.path.basename(self.images.name)
+
+		super().save(*args, **kwargs)
+
 class Category(models.Model):
 	title = models.CharField(max_length=55)
 	slug = models.SlugField(max_length=50)
@@ -59,7 +84,6 @@ class ChargersItems(models.Model):
 	model = models.ForeignKey(ChargerItemModel, null=True, blank=True, on_delete=models.CASCADE)
 	category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
 	in_stock = models.CharField('Наявність', null=True, blank=True, choices=IN_STOCK_CHOICES)
-	image = models.ImageField('Головне зображення', null=True, blank=True, upload_to='images/')
 
 	class Meta:
 		verbose_name_plural = 'Зарядні пристрої'
@@ -67,27 +91,39 @@ class ChargersItems(models.Model):
 	def __str__(self):
 		return self.title
 
-# функція для генерації імені для зображень товару
-def generate_filename(instance, filename):
-    base_filename, file_extension = os.path.splitext(filename)
-    new_filename = f"{slugify(base_filename)}_{instance.pk}{file_extension}"
-    return os.path.join('images/', new_filename)
 
 # додаткові зображення товару
-class Attachment(models.Model):
-	title = models.CharField("Ім\'я файлу", max_length=200, blank=True)
-	images = models.ImageField('Галерея фото', upload_to=generate_filename)
-	chargersitems = models.ForeignKey(ChargersItems, null=True, blank=True, on_delete=models.CASCADE, related_name='attachments')
-	def __str__(self):
-		return self.images.url
+class AttachmentChargersItems(models.Model):
+	chargeritem = models.ForeignKey(ChargersItems, on_delete=models.CASCADE, null=True)
+	gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, null=True)
 
-	def save(self, *args, **kwargs):
-		# Вказуємо автоматичне стоврення імені файлу якщо title порожній
-		if not self.title:
-			self.title = os.path.basename(self.images.name)
 
-		super().save(*args, **kwargs)
+# Класи для аксесуарів
+
+class Accessories(models.Model):
+	IN_STOCK_CHOICES = [
+		('True', 'Активно'),
+		('False', 'Неактивно'),
+		('pending', 'Під замовлення'),
+	]
+
+	title = models.CharField("Ім\'я файлу", max_length=200)
+	slug = AutoSlugField(populate_from='title', max_length=40, unique=True, default=None)
+	small_description = models.TextField('Короткий опис', null=True, max_length=600)
+	description = models.TextField('Опис', null=True)
+	size = models.CharField("Розмір", max_length=15)
+	material = models.CharField("Матеріал", max_length=50)
+	brand = models.CharField("Бренд", max_length=50)
+	price = models.IntegerField('Ціна', null=True)
+	country = models.CharField('Країна-виробник', null=True, max_length=20)
+	in_stock = models.CharField('Наявність', null=True, blank=True, choices=IN_STOCK_CHOICES)
+	chargeritem = models.ForeignKey(ChargerItemModel, null=True, blank=True, on_delete=models.CASCADE, related_name='chargeritem')
+	category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
 
 	class Meta:
-		verbose_name = 'Галерея фото'
-		verbose_name_plural = 'Галерея фото'
+		verbose_name = 'Аксесуари'
+		verbose_name_plural = 'Аксесуари'
+
+class AttachmentAccessories(models.Model):
+	accessory = models.ForeignKey(Accessories, on_delete=models.CASCADE, null=True)
+	gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, null=True)

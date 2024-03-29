@@ -5,11 +5,16 @@
 {% endblock %}
 
 {% block content %}
-<div class="container slide-it">
+<div class="container container-fluid slide-it">
     <div class="models_list" hx-get="{% url 'models_list' category='charging_stations' %}"
          hx-target=".container"
          hx-trigger="revealed"
          hx-swap="innerHTML transition:true">
+    </div>
+</div>
+<div class="container d-flex justify-content-center mt-3">
+    <div class="spinner-grow text-warning" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
 </div>
 {% endblock %}

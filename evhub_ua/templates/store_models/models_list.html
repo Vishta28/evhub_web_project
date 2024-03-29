@@ -1,6 +1,6 @@
 {% block content %}
-<div id="body" class="row body d-flex align-items-center justify-content-center" style="margin: 0; padding: 0;">
-    <div class="col-xxl-9 col-lg-12 text-center">
+<div id="body" class="row body d-flex align-items-center justify-content-center">
+    <div class="col-xxl-9 col-lg-12 col-md-12">
         <div class="row g-0 p-2">
 
             {% block models %}
@@ -18,7 +18,6 @@
                                 <div class="card-body text-dark">
                                     <h5 class="card-title">{{ models.title }}</h5>
                                     <p class="card-text">{{ models.description }}</p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                                 </div>
                             </div>
                         </div>
@@ -32,13 +31,12 @@
             {% if page_obj.has_next %}
             <div hx-get="{% url 'models_list' category='charging_stations' %}?page={{page_obj.next_page_number}}"
                  hx-swap="beforeend"
-                 hx-target="#body"
+                 hx-target=".container"
                  hx-select=".body"
                  hx-trigger="revealed">
             </div>
             {% endif %}
             {% endif %}
-
         </div>
     </div>
 </div>

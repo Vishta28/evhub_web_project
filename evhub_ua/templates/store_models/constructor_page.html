@@ -18,7 +18,7 @@
 
     {% if user_agent.is_mobile %}
     <div class="constructor-mobile-accordion accordion accordion-flush mt-3" id="accordionFlushExample">
-        <div class="accordion-item border-0" style="position: sticky; top: 0; z-index: 100;">
+        <div class="accordion-item border-0 p-1" style="position: sticky; top: 0; z-index: 100;">
             <h2 class="accordion-header">
                 <button class="accordion-button-constructor accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     Оберіть потрібні характеристики
@@ -28,7 +28,7 @@
             <form hx-get="{% url 'constructor_results' %}" hx-target=".superdiv" hx-trigger="change delay:500ms" hx-swap="innerHTML transition:true settle:0.5s">
                 <div class="row mt-2">
                 <div class="col-5 d-flex align-items-center text-center">
-                    <p>Тип роз'єму</p>
+                    <p>Тип роз'єму:</p>
                 </div>
                 <div class="col-7 type-select">
                     <select id="MyDiv" class="form-select border-0 border-bottom rounded-0" name="type" hx-get="{% url 'constructor_options' %}" hx-target=".phases" hx-trigger="change">
@@ -40,7 +40,7 @@
             </div>
             <div class="row">
                 <div class="col-5 d-flex align-items-center text-center">
-                    <p>Кількість фаз</p>
+                    <p>Кількість фаз:</p>
                 </div>
                 <div class="col-7 phases">
                     <select class="form-select border-0 border-bottom rounded-0" name="phases" hx-get="{% url 'constructor_options' %}" hx-target=".type-select" hx-trigger="change">
@@ -52,7 +52,7 @@
             </div>
             <div class="row">
                 <div class="power-select col-5 d-flex align-items-center text-center">
-                    <p>Ампери</p>
+                    <p>Ампери:</p>
                 </div>
                 <div class="col-7">
                     <select class="form-select border-0 border-bottom rounded-0" name="power_amps">
@@ -64,7 +64,7 @@
             </div>
             <div class="row">
                 <div class="col-5 d-flex align-items-center text-center">
-                    <p>Довжина кабелю</p>
+                    <p>Довжина кабелю:</p>
                 </div>
                 <div class="col-7">
                     <select class="form-select border-0 border-bottom rounded-0" name="cable_length" hx-get="{% url 'constructor_options' %}" hx-target=".type-select" hx-trigger="change">
@@ -76,7 +76,7 @@
             </div>
             <div class="row">
                 <div class="col-5 d-flex align-items-center text-center">
-                    <p>Колір</p>
+                    <p>Колір:</p>
                 </div>
                 <div class="col-7">
                     <select class="form-select border-0 border-bottom rounded-0" name="color">

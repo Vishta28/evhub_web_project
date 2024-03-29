@@ -2,12 +2,19 @@ from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
 
 from store.models import ChargersItems
+from store.utils import get_first_image
 
 
 class ComparisonView(ListView):
 	template_name = 'comparison/comparison_page.html'
 	model = ChargersItems
-	context_object_name = 'chargers_detail'
+	context_object_name = 'items'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['chargersitems_images'] = get_first_image(context)
+
+		return context
 
 class AddToComparisonView(DetailView):
 	def post(self, request):

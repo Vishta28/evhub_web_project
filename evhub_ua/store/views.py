@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django_user_agents.utils import get_user_agent
-from .models import ChargerItemModel, ChargersItems, Category
+from .models import ChargerItemModel, ChargersItems, Category, Accessories, AttachmentAccessories, Gallery
 from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.db.models import Q
+from django.template.defaulttags import register
+from .utils import get_first_image, get_all_images
 
 
 
@@ -16,19 +18,9 @@ class StoreFilter:
 		categories = ChargersItems.objects.values_list('category', flat=True).distinct()
 		return {'types': types, 'powers_amps': powers_amps, 'brands': brands, 'phases': phases, 'categories': categories}
 
-
-# стартова сторінка
-def welcome_page(request):
-	user_agent = get_user_agent(request)
-	if user_agent.is_mobile:
-		return render(request, 'store/welcome_mob.html')
-	else:
-		return render(request, 'store/welcome.html')
-
-def contact_info(request):
-	return render(request, 'store/contact_info.html')
-
 # сторінка магазину з фільтрами
+
+
 class StorePageView(ListView, StoreFilter):
 	model = ChargersItems
 	context_object_name = 'items'
@@ -44,6 +36,7 @@ class StorePageView(ListView, StoreFilter):
 			return ['store/store.html']
 		return super().get_template_names(*args, **kwargs)
 
+
 	# Параметри для пагінації та фільтрації
 
 	def get_context_data(self, **kwargs):
@@ -53,6 +46,7 @@ class StorePageView(ListView, StoreFilter):
 		context['power_amps'] = self.request.GET.get('power_amps', '')
 		context['phases'] = self.request.GET.get('phases', '')
 		context['brand'] = self.request.GET.get('brand', '')
+		context['chargersitems_images'] = get_first_image(context)
 
 		# отримуємо копію url видаляючи ключ page з url
 
@@ -146,20 +140,23 @@ class ItemDetail(DetailView):
 	model = ChargersItems
 	template_name = 'store/item_detail.html'
 	slug_url_kwarg = 'charger_slug'
-	context_object_name = 'chargers_detail'
+	context_object_name = 'item'
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+		print('context detail', context['item'])
 
 		session_comparison = self.request.session.get('comparison')
 		if session_comparison:
-			item_exist_comparison = next((item for item in session_comparison if item['slug'] == context['chargers_detail'].slug), None)
+			item_exist_comparison = next((item for item in session_comparison if item['slug'] == context['item'].slug), None)
 			context['item_exist_comparison'] = item_exist_comparison
 
 		session_favorites = self.request.session.get('favorites')
 		if session_favorites:
-			item_exist_favorites = next((item for item in session_favorites if item['slug'] == context['chargers_detail'].slug), None)
+			item_exist_favorites = next((item for item in session_favorites if item['slug'] == context['item'].slug), None)
 			context['item_exist_favorites'] = item_exist_favorites
+
+		context['chargersitems_images'] = get_all_images(context)
 
 		return context
 
@@ -167,7 +164,7 @@ class ItemDetail(DetailView):
 class SearchResults(ListView):
 	model = ChargersItems
 	template_name = 'store/search_results.html'
-	context_object_name = 'results'
+	context_object_name = 'items'
 
 	def get_queryset(self, *args, **kwargs):
 		qs = super().get_queryset(*args, **kwargs)
@@ -183,11 +180,51 @@ class SearchResults(ListView):
 			else:
 				return qs.filter(Q(title__icontains=q) | Q(category__title__icontains=q))
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['chargersitems_images'] = get_first_image(context)
+
+		return context
+
 class QuickView(DetailView):
 	model = ChargersItems
 	template_name = 'store/quick_view.html'
-	context_object_name = 'chargers_detail'
+	context_object_name = 'item'
 	slug_url_kwarg = 'charger_slug'
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['chargersitems_images'] = get_all_images(context)
+
+		return context
+
+@register.filter
+def get_item(dictionary, key):
+	print(dictionary, key)
+	print('here')
+	return dictionary.get(key)
 
 
+class AccessoriesStore(ListView):
+	model = Accessories
+	template_name = 'store/accessories_store.html'
+	context_object_name = 'accessories'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		accessories = context['accessories']
+		accessory_images = {}
+
+		for accessory in accessories:
+			# Отримати всі екземпляри AttachmentAccessories, які відповідають поточному аксесуару
+			attachment_accessories = accessory.attachmentaccessories_set.all()
+			# Припускається, що у моделі AttachmentAccessories є ForeignKey до моделі Gallery
+			if attachment_accessories:
+				accessory_images[accessory.slug] = [attachment_accessories.first().gallery.images.url]
+			else:
+				accessory_images[accessory.slug] = None
+		context['accessory_images'] = accessory_images
+		return context
+
+# accessory_images[accessory.pk] = [attachment.gallery.images.url for attachment in attachment_accessories]
+# accessory_images[accessory.pk] = attachment_accessories.first().gallery.images.url

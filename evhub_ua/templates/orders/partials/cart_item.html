@@ -1,0 +1,51 @@
+{% if item %}
+<tr id="cart-item-{{item.product.slug}}">
+    {% if item.image %}
+        {% for image in item.image|get_item:item.product.slug|slice:":1" %}
+            <td><img src="{{image}}" width="110%" height="110"></td>
+        {% endfor %}
+    {% endif %}
+    <td class="pt-1">
+        <div class="d-flex align-items-center mt-3"><h6 class="text-muted">{{item.product.title}}</h6></div>
+        <button class="btn btn-sm btn-secondary opacity-50 rounded-2 mt-2" data-bs-toggle="dropdown"
+            hx-get="{% url 'cart_accessories' item.product.model %}"
+            hx-target="#dropdown-{{item.product.slug}}"
+            hx-swap="innerHTML transition:true"
+            hx-trigger="click">
+            додайте аксесуари <b class="text-warning">+</b>
+        </button>
+        <div id="dropdown-{{item.product.slug}}" class="dropdown-menu rounded-4">
+            <div id="spinner" class="spinner-grow text-warning d-flex justify-content-center align-items-center" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </td>
+    <td class="pt-5">
+        <div class="row">
+            <a class="col-3 btn btn-sm btn-outline-warning d-flex justify-content-center rounded-4 fs-5 opacity-75 text-dark"
+                hx-get="{% url 'update_cart' item.product.slug 'decrement' %}"
+                hx-target="#cart-item-{{item.product.slug}}"
+                hx-swap="outerHTML transition:true">
+                <b class="pb-1">-</b>
+            </a>
+
+            <span class="col-2 d-flex justify-content-center align-items-center">{{item.quantity}}</span>
+
+            <a class="col-3 btn btn-sm btn-outline-warning d-flex justify-content-center rounded-4 opacity-75 fs-5 text-dark"
+                hx-get="{% url 'update_cart' item.product.slug 'increment' %}"
+                hx-target="#cart-item-{{item.product.slug}}"
+                hx-swap="outerHTML transition:true">
+                <b>+</b>
+            </a>
+        </div>
+    </td>
+    <td class="pt-5">{{item.total_price}}₴</td>
+    <td class="pt-5">
+        <button class="btn btn-sm btn-close"
+            hx-get="{% url 'update_cart' item.product.slug 'remove' %}"
+            hx-trigger="click"
+            hx-swap="innerHTML transition:true">
+        </button>
+    </td>
+</tr>
+{% endif %}
